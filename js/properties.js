@@ -1,3 +1,3 @@
 function getITopUrl(){
-    return "https://yourdomain/webservices/rest.php?version=1.2";
+    return "http://yourdomain/webservices/rest.php?version=1.2";
 }

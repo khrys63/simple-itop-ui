@@ -176,7 +176,7 @@ function SanitizeAndAddPersoType(type) {
         if (a['enclosure_name'] == undefined) {
             a.enclosure_name = '';
         }
-        //typage des objets : Device ou Chassi
+        //typage des objets : Device ou Chassis
         a.persoType = type;
         return a;
     }
@@ -195,7 +195,7 @@ function fillTableRack(data, idTable) {
         var tableHead = '<tr class="thead"><th>U</th><th>Type</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>Status</th></tr>';
         var theDevices = '';
         devices = rack.fields.device_list.map(SanitizeAndAddPersoType('Device'));
-        enclosures = rack.fields.enclosure_list.map(SanitizeAndAddPersoType('Chassi'));
+        enclosures = rack.fields.enclosure_list.map(SanitizeAndAddPersoType('Chassis'));
 
         enclosures.concat(devices).sort(rackByName).forEach(function (device) {
             if (device.enclosure_name == '') {
@@ -210,10 +210,11 @@ function fillTableRack(data, idTable) {
         $('#login').hide();
     }
 }
-//Chargement d'un chassi avec nom passé en param
+//Chargement d'un chassis avec nom passé en param
 function GetEnclosureWithName(name,persoType) {
-    if (persoType=='Chassi'){
+    if (persoType=='Chassis'){
         $('#result').val('');
+        $('#chassisname').html(name);
         var oJSON = {
             operation: 'core/get',
             'class': 'Server',

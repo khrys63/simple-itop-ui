@@ -10,8 +10,6 @@ This project will give you a simple page to show your datacenter and navigate be
 * on the left, all racks of your location
 * on the right, the detail of each U of each rack
 
-![iTop location](screenshot/itoplocation.png)
-
 ### Authentication
 Authentication based on iTop.
 
@@ -25,11 +23,15 @@ A simple URL :
 ```
 https://yourdomain/simple-itop-ui/datacenter.html?id=NAME_OF_YOUR_LOCATION
 ```
+![iTop location](screenshot/itoplocation.png)
+
 
 Also existing a page for showing a single rack.
 ```
 https://yourdomain/simple-itop-ui/rack.html?id=NAME_OF_YOUR_RACK
 ```
+
+![iTop location](screenshot/itoprack.png)
 
 ## Authors
 * **Christophe** - *Initial work* - [khrys63](https://github.com/khrys63)
