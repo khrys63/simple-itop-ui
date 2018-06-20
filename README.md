@@ -10,9 +10,12 @@ This project will give you a simple page to show your datacenter and navigate be
 * on the left, all racks of your location
 * on the right, the detail of each U of each rack
 
+![iTop location](screenshot/itoplocation.png)
+
 ### Authentication
 Authentication based on iTop.
 
+![iTop login](screenshot/itoplogin.png)
 
 ### Installing
 Copy file on your website server.
