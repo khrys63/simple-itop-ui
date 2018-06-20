@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+	<title>Itop viewer</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/properties.js"></script>
+	<script src="js/itop.js"></script>
+</head>
+<body>
+	<div class="body">
+		<div class="loading" id="loading">Loading&#8230;</div>
+		<fieldset id="login">
+			<legend>Server Parameters</legend>
+			<form>
+				iTop Login: <input type="text" id="auth_user" name="auth_user" value="" /> 
+				Password: <input type="password" id="auth_pwd" name="auth_pwd" value="" />&nbsp;
+				<button type="button" onclick="return GetRack()">Login</button>
+			</form>
+		</fieldset>
+		<div id="rack">
+			<br>
+			<strong>D&eacute;tail du rack : </strong>
+			<br> Nom :
+			<span id="namerack"></span>
+			<br> Nombre U :
+			<span id="nbu"></span> - Nombre U occup&eacute;(s):
+			<span id="uuse"></span> (<span id="upercent">-</span>%)
+			<br>
+			<br>
+			<div class="site">
+				<table id="tablerack">
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+		<div id="JSONResult">
+			JSON :
+			<br/>
+			<pre><span id="result"></span></pre>
+		</div>
+	</div>
+
+	<script id="u_line" type="text/template">
+	<tr>
+		<td>{description}</td>
+		<td>{persoType}</td>
+		<td>{name}</td>
+		<td>{nb_u}</td>
+		<td>{brand_name}</td>
+		<td>{model_name}</td>
+		<td>{status}</td>
+	</tr>
+	</script>
+</body>
+</html>
