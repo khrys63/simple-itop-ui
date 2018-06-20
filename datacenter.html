@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+	<title>Itop viewer</title>
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/properties.js"></script>
+	<script src="js/itop.js"></script>
+</head>
+<body>
+	<div class="body">
+		<div class="loading" id="loading">Loading&#8230;</div>
+		<fieldset id="login">
+			<legend>Server Parameters</legend>
+			<form>
+				iTop Login: <input type="text" id="auth_user" name="auth_user" value="" /> 
+				Password: <input type="password" id="auth_pwd" name="auth_pwd" value="" />&nbsp;
+				<button type="button" onclick="return GetLocation()">Login</button>
+			</form>
+		</fieldset>
+		<div id="datacenter">
+			<h2>
+				<span id="title"></span>
+				<span id="name"></span>
+			</h2>
+			<strong>D&eacute;tail de la salle : </strong>
+			<br>
+			<br>
+			<div class="site">
+				<table id="matable">
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+		<div id="rack">
+			<br>
+			<strong>D&eacute;tail du rack : </strong>
+			<br> Nom :
+			<span id="namerack"></span>
+			<br> Nombre U :
+			<span id="nbu"></span> - Nombre U occup&eacute;(s):
+			<span id="uuse"></span> (<span id="upercent">-</span>%)
+			<br>
+			<br>
+			<div class="site">
+				<table id="tablerack">
+					<tbody></tbody>
+				</table>
+			</div>
+			<div id="server">
+				<br>
+				<strong>D&eacute;tail du chassi : </strong>
+				<div class="site">
+					<table id="tableserver">
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div id="JSONResult">
+			JSON :
+			<br/>
+			<pre><span id="result"></span></pre>
+		</div>
+	</div>
+
+	<script id="racks_line" type="text/template">
+	<tr class="pointer">
+		<td onclick="GetRackWithName('{name}')">{name}</td>		
+	</tr>
+	</script>
+
+	<script id="u_line" type="text/template">
+	<tr class="pointer" onclick="GetEnclosureWithName('{name}','{persoType}')">
+		<td>{description}</td>
+		<td>{persoType}</td>
+		<td>{name}</td>
+		<td>{nb_u}</td>
+		<td>{brand_name}</td>
+		<td>{model_name}</td>
+		<td>{status}</td>
+	</tr>
+	</script>
+
+	<script id="server_line" type="text/template">
+		<tr>
+			<td>{name}</td>
+			<td>{brand_name}</td>
+		</tr>
+	</script>
+</body>
+</html>
