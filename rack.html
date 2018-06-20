@@ -33,6 +33,15 @@
 					<tbody></tbody>
 				</table>
 			</div>
+			<div id="server">
+				<br>
+				<strong>D&eacute;tail du chassis <span id="chassisname"></span> : </strong>
+				<div class="site">
+					<table id="tableserver">
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 		<div id="JSONResult">
 			JSON :
@@ -42,7 +51,7 @@
 	</div>
 
 	<script id="u_line" type="text/template">
-	<tr>
+	<tr class="pointer" onclick="GetEnclosureWithName('{name}','{persoType}')">
 		<td>{description}</td>
 		<td>{persoType}</td>
 		<td>{name}</td>
@@ -51,6 +60,13 @@
 		<td>{model_name}</td>
 		<td>{status}</td>
 	</tr>
+	</script>
+	
+	<script id="server_line" type="text/template">
+		<tr>
+			<td>{name}</td>
+			<td>{brand_name}</td>
+		</tr>
 	</script>
 </body>
 </html>
