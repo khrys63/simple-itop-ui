@@ -27,7 +27,7 @@ Also existing a page for showing a single rack.
 
 
 ## Authors
-* **Chrisotphe** - *Initial work* - [khrys63](https://github.com/khrys63)
+* **Christophe** - *Initial work* - [khrys63](https://github.com/khrys63)
 * **Sylvain Desgrais** - [Artpej](https://github.com/Artpej)
 
 
