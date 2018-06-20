@@ -16,7 +16,7 @@ Authentication based on iTop.
 
 ### Installing
 Copy file on your website server.
-Modify js/properties.js to update your itop webservice url.
+Modify <js/properties.js> to update your iTop webservice url.
 
 A simple URL :
 ```
@@ -24,7 +24,9 @@ https://yourdomain/simple-itop-ui/datacenter.html?id=NAME_OF_YOUR_LOCATION
 ```
 
 Also existing a page for showing a single rack.
-
+```
+https://yourdomain/simple-itop-ui/rack.html?id=NAME_OF_YOUR_RACK
+```
 
 ## Authors
 * **Christophe** - *Initial work* - [khrys63](https://github.com/khrys63)
@@ -35,6 +37,5 @@ Also existing a page for showing a single rack.
 This project is licensed under Apache 2.0.
 
 
-##Contributing
-
+## Contributing
 We welcome contributions from the community!
