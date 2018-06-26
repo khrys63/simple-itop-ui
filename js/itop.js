@@ -215,19 +215,32 @@ function GetEnclosureWithName(name,persoType) {
     if (persoType=='Chassis'){
         $('#result').val('');
         $('#chassisname').html(name);
+
+        $('#tableserver').not(':first').not(':last').remove();
+        var tableHead = '<tr class="thead"><th>Description</th><th>Marque</th></tr>';
+        $('#tableserver tbody').html(tableHead);
+
         var oJSON = {
             operation: 'core/get',
             'class': 'Server',
             key: "SELECT Server WHERE enclosure_name = \"" + name + "\"",
             output_fields: "name,brand_name"
         };
-        CallWSEnclosure(oJSON);
+        CallWSEnclosureServer(oJSON);
+
+        var oJSON = {
+            operation: 'core/get',
+            'class': 'NetworkDevice',
+            key: "SELECT NetworkDevice WHERE enclosure_name = \"" + name + "\"",
+            output_fields: "name,brand_name"
+        };
+        CallWSEnclosureNetwork(oJSON);
     }else{
         $('#server').hide();
     }
 }
-//Appel du WS Itop pour un rack
-function CallWSEnclosure(oJSON) {
+//Appel du WS Itop pour un chassis
+function CallWSEnclosureServer(oJSON) {
     $('#result').html('');
     $('#loading').show();
     $.ajax({
@@ -239,7 +252,17 @@ function CallWSEnclosure(oJSON) {
         success: function (data) {
             try{
                 $('#enclosure').show();
-                if (data) { fillTableEnclosure(data, "tableserver"); }
+                if (data) { 
+                    //on a pas l'id alors on passe par le nom
+                    var theServer=Object.keys(data.objects)
+                        .filter(function(a){return a.startsWith("Serve")})
+                        .map(function (key) { return data.objects[key].fields })
+                        .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b)},"");
+                        
+                    $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
+                    $('#server').show();
+                    $('#login').hide();
+                }
             //    $('#result').html(syntaxHighlight(data));
             } catch (e) {
                 console.log(e);
@@ -253,19 +276,41 @@ function CallWSEnclosure(oJSON) {
     });
     return false;
 }
-//Remplissage du tableau avec les U
-function fillTableEnclosure(data, idTable) {
-    if (data) {
-        //on a pas l'id alors on passe par le nom
-        var theServer=Object.keys(data.objects)
-            .filter(function(a){return a.startsWith("Serve")})
-            .map(function (key) { return data.objects[key].fields })
-            .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b)},"");
-            
-        $('#' + idTable).not(':first').not(':last').remove();
-        var tableHead = '<tr class="thead"><th>Description</th><th>Marque</th></tr>';
-        $('#' + idTable + ' tbody').html(tableHead + theServer);
-        $('#server').show();
-        $('#login').hide();
-    }
+
+//Appel du WS Itop pour un chassis
+function CallWSEnclosureNetwork(oJSON) {
+    $('#result').html('');
+    $('#loading').show();
+    $.ajax({
+        type: "POST",
+        url: getITopUrl(),
+        dataType: "json",
+        data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
+        crossDomain: 'true',
+        success: function (data) {
+            try{
+                $('#enclosure').show();
+                if (data) { 
+                    //on a pas l'id alors on passe par le nom
+                    var theServer=Object.keys(data.objects)
+                        .filter(function(a){return a.startsWith("Netw")})
+                        .map(function (key) { return data.objects[key].fields })
+                        .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);console.log(a.name+a.brand_name);},"");
+                        
+                    $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
+                    $('#server').show();
+                    $('#login').hide();
+                }
+            //    $('#result').html(syntaxHighlight(data));
+            } catch (e) {
+                console.log(e);
+            } finally {
+                $('#loading').hide();
+            }
+        },
+        error: function () {
+            $('#loading').hide();
+        }
+    });
+    return false;
 }
