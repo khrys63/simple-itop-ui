@@ -253,15 +253,7 @@ function CallWSEnclosureServer(oJSON) {
             try{
                 $('#enclosure').show();
                 if (data) { 
-                    //on a pas l'id alors on passe par le nom
-                    var theServer=Object.keys(data.objects)
-                        .filter(function(a){return a.startsWith("Serve")})
-                        .map(function (key) { return data.objects[key].fields })
-                        .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b)},"");
-                        
-                    $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
-                    $('#server').show();
-                    $('#login').hide();
+                    successEnclosure(data,"Serv")
                 }
             //    $('#result').html(syntaxHighlight(data));
             } catch (e) {
@@ -291,15 +283,7 @@ function CallWSEnclosureNetwork(oJSON) {
             try{
                 $('#enclosure').show();
                 if (data) { 
-                    //on a pas l'id alors on passe par le nom
-                    var theServer=Object.keys(data.objects)
-                        .filter(function(a){return a.startsWith("Netw")})
-                        .map(function (key) { return data.objects[key].fields })
-                        .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);console.log(a.name+a.brand_name);},"");
-                        
-                    $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
-                    $('#server').show();
-                    $('#login').hide();
+                    successEnclosure(data,"Netw")
                 }
             //    $('#result').html(syntaxHighlight(data));
             } catch (e) {
@@ -313,4 +297,16 @@ function CallWSEnclosureNetwork(oJSON) {
         }
     });
     return false;
+}
+function successEnclosure(data,startWith){
+    $('#enclosure').show();
+    //on a pas l'id alors on passe par le nom
+    var theServer=Object.keys(data.objects)
+        .filter(function(a){return a.startsWith(startWith)})
+        .map(function (key) { return data.objects[key].fields })
+        .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);console.log(a.name+a.brand_name);},"");
+        
+    $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
+    $('#server').show();
+    $('#login').hide();
 }
