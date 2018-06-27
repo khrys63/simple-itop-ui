@@ -66,9 +66,7 @@ function CallWSLocation(oJSON) {
         dataType: "json",
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
-        success: function (data) {
-            successLocationWS(data);
-        },
+        success: successLocationWS,
         error: function () {
             $('#loading').hide();
         }
