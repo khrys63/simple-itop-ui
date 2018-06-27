@@ -67,9 +67,7 @@ function CallWSLocation(oJSON) {
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
         success: successLocationWS,
-        error: function () {
-            $('#loading').hide();
-        }
+        error: loadingHide
     });
     return false;
 }
@@ -82,7 +80,7 @@ function successLocationWS(data){
     } catch (e) {
         console.log(e);
     } finally {
-        $('#loading').hide();
+        loadingHide()
     }
 }
 //Order by location
@@ -150,12 +148,8 @@ function CallWSRack(oJSON) {
         dataType: "json",
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
-        success: function (data) {
-            successRackWS(data);
-        },
-        error: function () {
-            $('#loading').hide();
-        }
+        success: successRackWS,
+        error: loadingHide
     });
     return false;
 }
@@ -168,7 +162,7 @@ function successRackWS(data){
     } catch (e) {
         console.log(e);
     } finally {
-        $('#loading').hide();
+        loadingHide()
     }
 }
 //Order by rack
@@ -257,12 +251,8 @@ function CallWSEnclosureServer(oJSON) {
         dataType: "json",
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
-        success: function (data) {
-            successEnclosureWS(data,"Serv")
-        },
-        error: function () {
-            $('#loading').hide();
-        }
+        success: successEnclosureWS,
+        error: loadingHide
     });
     return false;
 }
@@ -276,12 +266,8 @@ function CallWSEnclosureNetwork(oJSON) {
         dataType: "json",
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
-        success: function (data) {
-            successEnclosureWS(data,"Netw")
-        },
-        error: function () {
-            $('#loading').hide();
-        }
+        success: successEnclosureWS,
+        error: loadingHide
     });
     return false;
 }
@@ -298,12 +284,16 @@ function successEnclosureWS(data,startWith){
             
             $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
             $('#server').show();
-            $('#login').hide();
+            loadingHide()
         }
         $('#result').html(syntaxHighlight(data));
     } catch (e) {
         console.log(e);
     } finally {
-        $('#loading').hide();
+        loadingHide()
     }
+}
+//Fin de chargement
+function loadingHide(){
+    $('#loading').hide();  
 }
