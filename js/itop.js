@@ -72,7 +72,7 @@ function CallWSLocation(oJSON) {
     });
     return false;
 }
-// action lors retour success du WS des locations
+//Action lors retour success du WS des locations
 function successLocationWS(data){
     try {
         $('#datacenter').show();
@@ -90,7 +90,7 @@ function locationByName(a, b) {
         return a.orderitem.localeCompare(b.orderitem)
     }
 }
-
+//Ajout d'un 0 si le nom du rack termine par un seul numeric (need xxxx00 for ordering rack)
 function sanitizeRack(a){
     var char = a.name.charAt(a.name.length-2);
     if (char>='0' && char <='9'){
@@ -100,7 +100,6 @@ function sanitizeRack(a){
     }
     return a;
 }
-
 //Remplissage de la table des racks
 function fillTable(data, idTable) {
     if (data) {
@@ -159,7 +158,7 @@ function CallWSRack(oJSON) {
     });
     return false;
 }
-// action lors retour success du WS des racks
+//Action lors retour success du WS des racks
 function successRackWS(data){
     try{
         $('#rack').show();
@@ -285,7 +284,7 @@ function CallWSEnclosureNetwork(oJSON) {
     });
     return false;
 }
-// action lors retour success du WS des Enclosures
+//Action lors retour success du WS des Enclosures
 function successEnclosureWS(data,startWith){
     try {
         $('#enclosure').show();
