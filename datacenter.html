@@ -10,14 +10,14 @@
 <body>
 	<div class="body">
 		<div class="loading" id="loading">Loading&#8230;</div>
-		<fieldset id="login">
+		<form method="POST" id="LoginFormLoc">
+			<fieldset id="login">
 			<legend>Server Parameters</legend>
-			<form>
 				iTop Login: <input type="text" id="auth_user" name="auth_user" value="" /> 
 				Password: <input type="password" id="auth_pwd" name="auth_pwd" value="" />&nbsp;
-				<button type="button" onclick="return GetLocation()">Login</button>
-			</form>
-		</fieldset>
+				<button type="submit">Login</button>
+			</fieldset>
+		</form>
 		<div id="datacenter">
 			<h2>
 				<span id="title"></span>
