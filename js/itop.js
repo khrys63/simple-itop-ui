@@ -75,12 +75,14 @@ function CallWSLocation(oJSON) {
 function successLocationWS(data){
     try {
         $('#datacenter').show();
-        if (data) { fillTableLocation(data); }
-        $('#result').html(syntaxHighlight(data));
+        if (data) { 
+            fillTableLocation(data);
+            $('#result').html(syntaxHighlight(data));
+        }
     } catch (e) {
         console.log(e);
     } finally {
-        loadingHide()
+        loadingHide();
     }
 }
 //Order by location
@@ -153,12 +155,14 @@ function CallWSRack(oJSON) {
 function successRackWS(data){
     try{
         $('#rack').show();
-        if (data) { fillTableRack(data); }
-        $('#result').html(syntaxHighlight(data));
+        if (data) { 
+            fillTableRack(data);
+            $('#result').html(syntaxHighlight(data));
+        }
     } catch (e) {
         console.log(e);
     } finally {
-        loadingHide()
+        loadingHide();
     }
 }
 //Order by rack
@@ -288,13 +292,13 @@ function successEnclosureWS(startWith){
                 
                 $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
                 $('#server').show();
-                loadingHide()
+                loadingHide();
+                $('#result').html(syntaxHighlight(data));
             }
-            $('#result').html(syntaxHighlight(data));
         } catch (e) {
             console.log(e);
         } finally {
-            loadingHide()
+            loadingHide();
         }
     }
 }
