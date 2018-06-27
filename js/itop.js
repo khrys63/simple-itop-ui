@@ -251,7 +251,7 @@ function CallWSEnclosureServer(oJSON) {
         dataType: "json",
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
-        success: successEnclosureWS,
+        success: successEnclosureWS('Serv'),
         error: loadingHide
     });
     return false;
@@ -266,31 +266,33 @@ function CallWSEnclosureNetwork(oJSON) {
         dataType: "json",
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
-        success: successEnclosureWS,
+        success: successEnclosureWS('Netw'),
         error: loadingHide
     });
     return false;
 }
 //Action lors retour success du WS des Enclosures
-function successEnclosureWS(data,startWith){
-    try {
-        $('#enclosure').show();
-        if (data) { 
-            //on a pas l'id alors on passe par le nom
-            var theServer=Object.keys(data.objects)
-                .filter(function(a){return a.startsWith(startWith)})
-                .map(function (key) { return data.objects[key].fields })
-                .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);console.log(a.name+a.brand_name);},"");
-            
-            $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
-            $('#server').show();
+function successEnclosureWS(startWith){
+    return function (data){
+        try {
+            $('#enclosure').show();
+            if (data) { 
+                //on a pas l'id alors on passe par le nom
+                var theServer=Object.keys(data.objects)
+                    .filter(function(a){return a.startsWith(startWith)})
+                    .map(function (key) { return data.objects[key].fields })
+                    .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);console.log(a.name+a.brand_name);},"");
+                
+                $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
+                $('#server').show();
+                loadingHide()
+            }
+            $('#result').html(syntaxHighlight(data));
+        } catch (e) {
+            console.log(e);
+        } finally {
             loadingHide()
         }
-        $('#result').html(syntaxHighlight(data));
-    } catch (e) {
-        console.log(e);
-    } finally {
-        loadingHide()
     }
 }
 //Fin de chargement
