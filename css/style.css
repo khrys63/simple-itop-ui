@@ -75,7 +75,7 @@ table {
 td,
 th {
     border: 1px solid #ddd;
-    padding: 6px;
+    padding: 5px;
 }
 
 tr:nth-child(even) {
