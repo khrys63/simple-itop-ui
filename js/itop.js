@@ -19,7 +19,7 @@ function getUrlParameter(sParam) {
             return sParameterName[1] === undefined ? true : sParameterName[1];
         }
     }
-};
+}
 //Surlignage et coloration syntaxique d'un flux JSON
 function syntaxHighlight(json) {
     if (getIsDebugJSONVisible()){
@@ -75,7 +75,7 @@ function CallWSLocation(oJSON) {
 function successLocationWS(data){
     try {
         $('#datacenter').show();
-        if (data) { fillTable(data, "matable"); }
+        if (data) { fillTableLocation(data); }
         $('#result').html(syntaxHighlight(data));
     } catch (e) {
         console.log(e);
@@ -99,14 +99,14 @@ function sanitizeRack(a){
     }
     return a;
 }
-//Remplissage de la table des racks
-function fillTable(data, idTable) {
+//Remplissage de la table de la location avec tous les racks
+function fillTableLocation(data) {
     if (data) {
         //on a pas l'id alors on passe par le 1er objet du JSON
         var salle = Object.keys(data.objects).slice(0, 1).map(function(key){return data.objects[key];})[0];
 
         $('#name').html(salle.fields.name);
-        $('#' + idTable).not(':first').not(':last').remove();
+        $('#tableLocation').not(':first').not(':last').remove();
         var tableHead = '<tr class="thead"><th>Rack</th></tr>';
         var theRacks = '';
         salle.fields.physicaldevice_list.map(sanitizeRack).sort(locationByName).forEach(function (rack) {
@@ -114,7 +114,7 @@ function fillTable(data, idTable) {
                 theRacks += TemplateEngine($("#racks_line").html(), rack)
             }
         });
-        $('#' + idTable + ' tbody').html(tableHead + theRacks);
+        $('#tableLocation tbody').html(tableHead + theRacks);
         $('#login').hide();
     }
 }
@@ -153,7 +153,7 @@ function CallWSRack(oJSON) {
 function successRackWS(data){
     try{
         $('#rack').show();
-        if (data) { fillTableRack(data, "tablerack"); }
+        if (data) { fillTableRack(data); }
         $('#result').html(syntaxHighlight(data));
     } catch (e) {
         console.log(e);
@@ -180,7 +180,7 @@ function SanitizeAndAddPersoType(type) {
     }
 }
 //Remplissage du tableau avec les U
-function fillTableRack(data, idTable) {
+function fillTableRack(data) {
     if (data) {
         //on a pas l'id alors on passe par le 1er objet du JSON
         var rack = Object.keys(data.objects).slice(0, 1).map(function (key) { return data.objects[key] })[0];
@@ -188,7 +188,7 @@ function fillTableRack(data, idTable) {
         $('#namerack').html(rack.fields.name);
         var nbu = rack.fields.nb_u;
         $('#nbu').html(nbu);
-        $('#' + idTable).not(':first').not(':last').remove();
+        $('#tablerack').not(':first').not(':last').remove();
         var Us = 0;
         var tableHead = '<tr class="thead"><th>U</th><th>Type</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>Status</th></tr>';
         var theDevices = '';
@@ -209,7 +209,7 @@ function fillTableRack(data, idTable) {
             }
         });
 
-        $('#' + idTable + ' tbody').html(tableHead + theDevices);
+        $('#tablerack tbody').html(tableHead + theDevices);
         $('#uuse').html(Us);
         $('#upercent').html(parseFloat(Us / nbu * 100).toFixed(2));
         $('#login').hide();
