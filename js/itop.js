@@ -47,7 +47,7 @@ function syntaxHighlight(json) {
     }
 }
 //Chargement d'une salle avec url
-function GetLocation() {
+function GetLocation(e) {
     $('#result').val('');
     var oJSON = {
         operation: 'core/get',
@@ -55,6 +55,8 @@ function GetLocation() {
         key: "SELECT Location WHERE name = \"" + getUrlParameter('id') + "\""
     };
     CallWSLocation(oJSON);
+    e.preventDefault();
+    return false;
 }
 //Appel du WS Itop pour une salle
 function CallWSLocation(oJSON) {
@@ -133,8 +135,9 @@ function GetRackWithName(name) {
     CallWSRack(oJSON);
 }
 //Chargement d'un rack avec nom dans l'url
-function GetRack() {
+function GetRack(e) {
     GetRackWithName(getUrlParameter('id')) ;
+    e.preventDefault();
 }
 //Appel du WS Itop pour un rack
 function CallWSRack(oJSON) {
@@ -287,7 +290,7 @@ function successEnclosureWS(startWith){
                 //on a pas l'id alors on passe par le nom
                 var theServer=Object.keys(data.objects)
                     .filter(function(a){return a.startsWith(startWith)})
-                    .map(function (key) { return data.objects[key].fields })
+                    .map(function (key){return data.objects[key].fields})
                     .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);},"");
                 
                 $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
@@ -306,3 +309,7 @@ function successEnclosureWS(startWith){
 function loadingHide(){
     $('#loading').hide();  
 }
+$(document).ready(function () {
+    $('#LoginFormLoc').on("submit",GetLocation);
+    $('#LoginFormRack').on("submit",GetRack);
+});
