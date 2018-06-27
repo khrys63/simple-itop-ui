@@ -33,6 +33,7 @@ pre {
 fieldset {
     padding: 10px;
     border: 1px #ccc solid;
+    width: 560px;
 }
 
 legend {
