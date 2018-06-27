@@ -22,26 +22,29 @@ function getUrlParameter(sParam) {
 };
 //Surlignage et coloration syntaxique d'un flux JSON
 function syntaxHighlight(json) {
-    if (typeof json != 'string') {
-        json = JSON.stringify(json, undefined, 2);
-    }
-    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    $('#JSONResult').show();
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-        var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-                cls = 'key';
-            } else {
-                cls = 'string';
-            }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
+    if (getIsDebugJSONVisible()){
+        $('#result').html('');
+        if (typeof json != 'string') {
+            json = JSON.stringify(json, undefined, 2);
         }
-        return '<span class="' + cls + '">' + match + '</span>';
-    });
+        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        $('#JSONResult').show();
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+            var cls = 'number';
+            if (/^"/.test(match)) {
+                if (/:$/.test(match)) {
+                    cls = 'key';
+                } else {
+                    cls = 'string';
+                }
+            } else if (/true|false/.test(match)) {
+                cls = 'boolean';
+            } else if (/null/.test(match)) {
+                cls = 'null';
+            }
+            return '<span class="' + cls + '">' + match + '</span>';
+        });
+    }
 }
 //Chargement d'une salle avec url
 function GetLocation() {
@@ -64,15 +67,7 @@ function CallWSLocation(oJSON) {
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
         success: function (data) {
-            try {
-                $('#datacenter').show();
-                if (data) { fillTable(data, "matable"); }
-            //    $('#result').html(syntaxHighlight(data));
-            } catch (e) {
-                console.log(e);
-            } finally {
-                $('#loading').hide();
-            }
+            successLocationWS(data);
         },
         error: function () {
             $('#loading').hide();
@@ -80,13 +75,25 @@ function CallWSLocation(oJSON) {
     });
     return false;
 }
+//Action lors retour success du WS des locations
+function successLocationWS(data){
+    try {
+        $('#datacenter').show();
+        if (data) { fillTable(data, "matable"); }
+        $('#result').html(syntaxHighlight(data));
+    } catch (e) {
+        console.log(e);
+    } finally {
+        $('#loading').hide();
+    }
+}
 //Order by location
 function locationByName(a, b) {
     if (a.orderitem != undefined) {
         return a.orderitem.localeCompare(b.orderitem)
     }
 }
-
+//Ajout d'un 0 si le nom du rack termine par un seul numeric (need xxxx00 for ordering rack)
 function sanitizeRack(a){
     var char = a.name.charAt(a.name.length-2);
     if (char>='0' && char <='9'){
@@ -96,7 +103,6 @@ function sanitizeRack(a){
     }
     return a;
 }
-
 //Remplissage de la table des racks
 function fillTable(data, idTable) {
     if (data) {
@@ -147,21 +153,25 @@ function CallWSRack(oJSON) {
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
         success: function (data) {
-            try{
-                $('#rack').show();
-                if (data) { fillTableRack(data, "tablerack"); }
-            //    $('#result').html(syntaxHighlight(data));
-            } catch (e) {
-                console.log(e);
-            } finally {
-                $('#loading').hide();
-            }
+            successRackWS(data);
         },
         error: function () {
             $('#loading').hide();
         }
     });
     return false;
+}
+//Action lors retour success du WS des racks
+function successRackWS(data){
+    try{
+        $('#rack').show();
+        if (data) { fillTableRack(data, "tablerack"); }
+        $('#result').html(syntaxHighlight(data));
+    } catch (e) {
+        console.log(e);
+    } finally {
+        $('#loading').hide();
+    }
 }
 //Order by rack
 function rackByName(a, b) {
@@ -250,17 +260,7 @@ function CallWSEnclosureServer(oJSON) {
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
         success: function (data) {
-            try{
-                $('#enclosure').show();
-                if (data) { 
-                    successEnclosure(data,"Serv")
-                }
-            //    $('#result').html(syntaxHighlight(data));
-            } catch (e) {
-                console.log(e);
-            } finally {
-                $('#loading').hide();
-            }
+            successEnclosureWS(data,"Serv")
         },
         error: function () {
             $('#loading').hide();
@@ -268,7 +268,6 @@ function CallWSEnclosureServer(oJSON) {
     });
     return false;
 }
-
 //Appel du WS Itop pour un chassis
 function CallWSEnclosureNetwork(oJSON) {
     $('#result').html('');
@@ -280,17 +279,7 @@ function CallWSEnclosureNetwork(oJSON) {
         data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
         crossDomain: 'true',
         success: function (data) {
-            try{
-                $('#enclosure').show();
-                if (data) { 
-                    successEnclosure(data,"Netw")
-                }
-            //    $('#result').html(syntaxHighlight(data));
-            } catch (e) {
-                console.log(e);
-            } finally {
-                $('#loading').hide();
-            }
+            successEnclosureWS(data,"Netw")
         },
         error: function () {
             $('#loading').hide();
@@ -298,15 +287,25 @@ function CallWSEnclosureNetwork(oJSON) {
     });
     return false;
 }
-function successEnclosure(data,startWith){
-    $('#enclosure').show();
-    //on a pas l'id alors on passe par le nom
-    var theServer=Object.keys(data.objects)
-        .filter(function(a){return a.startsWith(startWith)})
-        .map(function (key) { return data.objects[key].fields })
-        .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);console.log(a.name+a.brand_name);},"");
-        
-    $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
-    $('#server').show();
-    $('#login').hide();
+//Action lors retour success du WS des Enclosures
+function successEnclosureWS(data,startWith){
+    try {
+        $('#enclosure').show();
+        if (data) { 
+            //on a pas l'id alors on passe par le nom
+            var theServer=Object.keys(data.objects)
+                .filter(function(a){return a.startsWith(startWith)})
+                .map(function (key) { return data.objects[key].fields })
+                .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);console.log(a.name+a.brand_name);},"");
+            
+            $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
+            $('#server').show();
+            $('#login').hide();
+        }
+        $('#result').html(syntaxHighlight(data));
+    } catch (e) {
+        console.log(e);
+    } finally {
+        $('#loading').hide();
+    }
 }
