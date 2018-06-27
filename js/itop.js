@@ -105,13 +105,13 @@ function sanitizeRack(a){
 function fillTableLocation(data) {
     if (data) {
         //on a pas l'id alors on passe par le 1er objet du JSON
-        var salle = Object.keys(data.objects).slice(0, 1).map(function(key){return data.objects[key];})[0];
+        var location = Object.keys(data.objects).slice(0, 1).map(function(key){return data.objects[key];})[0];
 
-        $('#name').html(salle.fields.name);
+        $('#name').html(location.fields.name);
         $('#tableLocation').not(':first').not(':last').remove();
         var tableHead = '<tr class="thead"><th>Rack</th></tr>';
         var theRacks = '';
-        salle.fields.physicaldevice_list.map(sanitizeRack).sort(locationByName).forEach(function (rack) {
+        location.fields.physicaldevice_list.map(sanitizeRack).sort(locationByName).forEach(function (rack) {
             if (rack.finalclass == 'Rack') {
                 theRacks += TemplateEngine($("#racks_line").html(), rack)
             }
