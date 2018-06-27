@@ -107,13 +107,9 @@ function fillTable(data, idTable) {
 
         $('#name').html(salle.fields.name);
         $('#' + idTable).not(':first').not(':last').remove();
-        var Us = 0;
         var tableHead = '<tr class="thead"><th>Rack</th></tr>';
         var theRacks = '';
-        var racks = '';
-        racks = salle.fields.physicaldevice_list;
-
-        racks.map(sanitizeRack).sort(locationByName).forEach(function (rack) {
+        salle.fields.physicaldevice_list.map(sanitizeRack).sort(locationByName).forEach(function (rack) {
             if (rack.finalclass == 'Rack') {
                 theRacks += TemplateEngine($("#racks_line").html(), rack)
             }
@@ -201,7 +197,14 @@ function fillTableRack(data, idTable) {
 
         enclosures.concat(devices).sort(rackByName).forEach(function (device) {
             if (device.enclosure_name == '') {
-                if (device.nb_u != 0) { Us += parseInt(device.nb_u); }
+                if (device.nb_u != 0) { 
+                    // si FRONT ou REAR dans la description on divise par 2 la capacité du U
+                    if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
+                        Us += parseFloat(device.nb_u/2);
+                    }else{
+                        Us += parseFloat(device.nb_u);
+                    }
+                }
                 theDevices += TemplateEngine($("#u_line").html(), device)
             }
         });
@@ -281,7 +284,7 @@ function successEnclosureWS(startWith){
                 var theServer=Object.keys(data.objects)
                     .filter(function(a){return a.startsWith(startWith)})
                     .map(function (key) { return data.objects[key].fields })
-                    .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);console.log(a.name+a.brand_name);},"");
+                    .reduce(function(a,b){return a+TemplateEngine($("#server_line").html(), b);},"");
                 
                 $('#tableserver tbody').html($('#tableserver tbody').html() + theServer);
                 $('#server').show();
