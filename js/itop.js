@@ -79,11 +79,9 @@ function successLocationWS(data){
         if (data) { 
             switch (data.message){
                 case 'Error: Invalid login':
-                    console.log('Invalid Login');
-                    $('#errorLogin').html("Login ou mot de passe incorrect").show();
+                    showErrorLogin();
                     break;
                 case 'Found: 0':
-                    console.log('Salle inexistante');
                     $('#errorLogin').html("Rack inexistant").show();
                     break;
                 default:
@@ -170,11 +168,9 @@ function successRackWS(data){
     try{
         switch (data.message){
             case 'Error: Invalid login':
-                console.log('Invalid Login');
-                $('#errorLogin').html("Login ou mot de passe incorrect").show();
+                showErrorLogin();
                 break;
             case 'Found: 0':
-                console.log('Salle inexistante');
                 $('#errorLogin').html("Salle inexistante").show();
                 break;
             default:
@@ -328,6 +324,11 @@ function successEnclosureWS(startWith){
 //Fin de chargement
 function loadingHide(){
     $('#loading').hide();  
+}
+//Login ou mot de passe invalide
+function showErrorLogin(){
+    console.log('Invalid Login');
+    $('#errorLogin').html("Login ou mot de passe incorrect").show();
 }
 $(document).ready(function () {
     $('#LoginFormLoc').on("submit",GetLocation);
