@@ -76,10 +76,21 @@ function CallWSLocation(oJSON) {
 //Action lors retour success du WS des locations
 function successLocationWS(data){
     try {
-        $('#datacenter').show();
         if (data) { 
-            fillTableLocation(data);
-            $('#result').html(syntaxHighlight(data));
+            switch (data.message){
+                case 'Error: Invalid login':
+                    console.log('Invalid Login');
+                    $('#errorLogin').html("Login ou mot de passe incorrect").show();
+                    break;
+                case 'Found: 0':
+                    console.log('Salle inexistante');
+                    $('#errorLogin').html("Salle inexistante").show();
+                    break;
+                default:
+                    $('#datacenter').show();
+                    fillTableLocation(data);
+                    $('#result').html(syntaxHighlight(data));   
+            }
         }
     } catch (e) {
         console.log(e);
@@ -119,7 +130,7 @@ function fillTableLocation(data) {
             }
         });
         $('#tableLocation tbody').html(tableHead + theRacks);
-        $('#login').hide();
+        $('#LoginFormLoc').hide();
     }
 }
 //Chargement d'un rack avec nom passé en param
@@ -157,10 +168,19 @@ function CallWSRack(oJSON) {
 //Action lors retour success du WS des racks
 function successRackWS(data){
     try{
-        $('#rack').show();
-        if (data) { 
-            fillTableRack(data);
-            $('#result').html(syntaxHighlight(data));
+        switch (data.message){
+            case 'Error: Invalid login':
+                console.log('Invalid Login');
+                $('#errorLogin').html("Login ou mot de passe incorrect").show();
+                break;
+            case 'Found: 0':
+                console.log('Salle inexistante');
+                $('#errorLogin').html("Salle inexistante").show();
+                break;
+            default:
+                $('#rack').show();
+                fillTableRack(data);
+                $('#result').html(syntaxHighlight(data));
         }
     } catch (e) {
         console.log(e);
@@ -219,7 +239,7 @@ function fillTableRack(data) {
         $('#tablerack tbody').html(tableHead + theDevices);
         $('#uuse').html(Us);
         $('#upercent').html(parseFloat(Us / nbu * 100).toFixed(2));
-        $('#login').hide();
+        $('#LoginFormRack').hide();
     }
 }
 //Chargement d'un chassis avec nom passé en param
