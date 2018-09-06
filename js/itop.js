@@ -84,7 +84,7 @@ function successLocationWS(data){
                     break;
                 case 'Found: 0':
                     console.log('Salle inexistante');
-                    $('#errorLogin').html("Salle inexistante").show();
+                    $('#errorLogin').html("Rack inexistant").show();
                     break;
                 default:
                     $('#datacenter').show();

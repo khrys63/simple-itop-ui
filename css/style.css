@@ -67,9 +67,9 @@ legend {
     clear:both;
 }
 #errorLogin{
-display: none;
-font-weight: bold;
-color: red;
+    display: none;
+    font-weight: bold;
+    color: red;
 }
 table {
     border-collapse: collapse;
