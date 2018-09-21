@@ -81,6 +81,9 @@ function successLocationWS(data){
                 case 'Error: Invalid login':
                     showErrorLogin();
                     break;
+                case 'Error: This user is not authorized to use the web services. (The profile REST Services User is required to access the REST web services)':
+                    showImpossibleLogin();
+                    break;
                 case 'Found: 0':
                     $('#errorLogin').html("Rack inexistant").show();
                     break;
@@ -169,6 +172,9 @@ function successRackWS(data){
         switch (data.message){
             case 'Error: Invalid login':
                 showErrorLogin();
+                break;
+            case 'Error: This user is not authorized to use the web services. (The profile REST Services User is required to access the REST web services)':
+                showImpossibleLogin();
                 break;
             case 'Found: 0':
                 $('#errorLogin').html("Salle inexistante").show();
@@ -328,7 +334,12 @@ function loadingHide(){
 //Login ou mot de passe invalide
 function showErrorLogin(){
     console.log('Invalid Login');
-    $('#errorLogin').html("Login ou mot de passe incorrect").show();
+    $('#errorLogin').html("Login ou mot de passe incorrect.").show();
+}
+//connection au WS interdite
+function showImpossibleLogin(){
+    console.log('This user is not authorized to use the web services. ');
+    $('#errorLogin').html("Utilisateur non autorisé.").show();
 }
 $(document).ready(function () {
     $('#LoginFormLoc').on("submit",GetLocation);
