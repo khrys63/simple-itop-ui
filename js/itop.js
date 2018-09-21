@@ -49,12 +49,17 @@ function syntaxHighlight(json) {
 //Chargement d'une salle avec url
 function GetLocation(e) {
     $('#result').val('');
-    var oJSON = {
-        operation: 'core/get',
-        'class': 'Location',
-        key: "SELECT Location WHERE name = \"" + getUrlParameter('id') + "\""
-    };
-    CallWSLocation(oJSON);
+    datacenterId = getUrlParameter('id');
+    if (datacenterId != null){
+        var oJSON = {
+            operation: 'core/get',
+            'class': 'Location',
+            key: "SELECT Location WHERE name = \"" + datacenterId + "\""
+        };
+        CallWSLocation(oJSON);
+    } else {
+        showErrorId();
+    }
     e.preventDefault();
     return false;
 }
@@ -330,6 +335,11 @@ function successEnclosureWS(startWith){
 //Fin de chargement
 function loadingHide(){
     $('#loading').hide();  
+}
+//Id Obligatoire
+function showErrorId(){
+    console.log('Id undefined');
+    $('#errorLogin').html("Paramètre id obligatoire.").show();
 }
 //Login ou mot de passe invalide
 function showErrorLogin(){
