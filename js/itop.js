@@ -153,7 +153,12 @@ function GetRackWithName(name) {
 }
 //Chargement d'un rack avec nom dans l'url
 function GetRack(e) {
-    GetRackWithName(getUrlParameter('id')) ;
+    rackId = getUrlParameter('id');
+    if (datacenterId != null){
+        GetRackWithName(rackId);
+    } else {
+        showErrorId();
+    }
     e.preventDefault();
 }
 //Appel du WS Itop pour un rack
