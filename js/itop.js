@@ -49,12 +49,17 @@ function syntaxHighlight(json) {
 //Chargement d'une salle avec url
 function GetLocation(e) {
     $('#result').val('');
-    var oJSON = {
-        operation: 'core/get',
-        'class': 'Location',
-        key: "SELECT Location WHERE name = \"" + getUrlParameter('id') + "\""
-    };
-    CallWSLocation(oJSON);
+    datacenterId = getUrlParameter('id');
+    if (datacenterId != null){
+        var oJSON = {
+            operation: 'core/get',
+            'class': 'Location',
+            key: "SELECT Location WHERE name = \"" + datacenterId + "\""
+        };
+        CallWSLocation(oJSON);
+    } else {
+        showErrorId();
+    }
     e.preventDefault();
     return false;
 }
@@ -80,6 +85,9 @@ function successLocationWS(data){
             switch (data.message){
                 case 'Error: Invalid login':
                     showErrorLogin();
+                    break;
+                case 'Error: This user is not authorized to use the web services. (The profile REST Services User is required to access the REST web services)':
+                    showImpossibleLogin();
                     break;
                 case 'Found: 0':
                     $('#errorLogin').html("Rack inexistant").show();
@@ -145,7 +153,12 @@ function GetRackWithName(name) {
 }
 //Chargement d'un rack avec nom dans l'url
 function GetRack(e) {
-    GetRackWithName(getUrlParameter('id')) ;
+    rackId = getUrlParameter('id');
+    if (datacenterId != null){
+        GetRackWithName(rackId);
+    } else {
+        showErrorId();
+    }
     e.preventDefault();
 }
 //Appel du WS Itop pour un rack
@@ -169,6 +182,9 @@ function successRackWS(data){
         switch (data.message){
             case 'Error: Invalid login':
                 showErrorLogin();
+                break;
+            case 'Error: This user is not authorized to use the web services. (The profile REST Services User is required to access the REST web services)':
+                showImpossibleLogin();
                 break;
             case 'Found: 0':
                 $('#errorLogin').html("Salle inexistante").show();
@@ -325,10 +341,20 @@ function successEnclosureWS(startWith){
 function loadingHide(){
     $('#loading').hide();  
 }
+//Id Obligatoire
+function showErrorId(){
+    console.log('Id undefined');
+    $('#errorLogin').html("Paramètre id obligatoire.").show();
+}
 //Login ou mot de passe invalide
 function showErrorLogin(){
     console.log('Invalid Login');
-    $('#errorLogin').html("Login ou mot de passe incorrect").show();
+    $('#errorLogin').html("Login ou mot de passe incorrect.").show();
+}
+//connection au WS interdite
+function showImpossibleLogin(){
+    console.log('This user is not authorized to use the web services. ');
+    $('#errorLogin').html("Utilisateur non autorisé.").show();
 }
 $(document).ready(function () {
     $('#LoginFormLoc').on("submit",GetLocation);
