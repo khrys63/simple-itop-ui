@@ -1,7 +1,7 @@
 # simple-itop-ui
 A simple UI for iTop.
   
-You use [iTop](https://www.combodo.com/itop) as your internal CMDB with the following structure :
+You use [iTop](https://www.combodo.com/itop) ([iTop on GitHub](https://github.com/Combodo/iTop)) as your internal CMDB with the following structure :
 * Location -> Rack -> Server
 * Location -> Rack -> Enclosure -> Server
 * Location -> Rack -> Enclosure -> NetworkDevice
@@ -14,6 +14,10 @@ This project will give you a simple page to show your datacenter and navigate be
 Authentication based on iTop.
 
 ![iTop login](screenshot/itoplogin.png)
+
+Warning : 
+- The REST/JSON API requires iTop 2.0.1 or newer.
+- The REST/JSON API is restricted in iTop 2.5 or newer to the users having the profile REST Services User.
 
 ### Installing
 Copy file on your website server.
