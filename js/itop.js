@@ -127,6 +127,7 @@ function fillTableLocation(data) {
         var location = Object.keys(data.objects).slice(0, 1).map(function(key){return data.objects[key];})[0];
 
         $('#name').html(location.fields.name);
+        $('#locationOrg').html(location.fields.org_name);
         $('#tableLocation').not(':first').not(':last').remove();
         var tableHead = '<tr class="thead"><th>Rack</th></tr>';
         var theRacks = '';
