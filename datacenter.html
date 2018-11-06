@@ -32,12 +32,15 @@
 		</div>
 		<div id="rack">
 			<br>
+			<div id="infoRack">
 			<strong>D&eacute;tail du rack : </strong>
-			<br> Nom :
-			<span id="namerack"></span>
-			<br> Nombre U :
-			<span id="nbu"></span> - Nombre U occup&eacute;(s):
-			<span id="uuse"></span> (<span id="upercent">-</span>%)
+				<br> Nom :
+				<span id="namerack"></span>
+				<br> Nombre U :
+				<span id="nbu"></span> - Nombre U occup&eacute;(s):
+				<span id="uuse"></span> (<span id="upercent">-</span>%)
+			</div>
+			<div id="donutChart"><canvas id="myChart" width="100" height="100"></canvas></div>
 			<br>
 			<br>
 			<div class="site">
@@ -87,5 +90,6 @@
 			<td>{brand_name}</td>
 		</tr>
 	</script>
+    <script src="js/Chart.min.js"></script>
 </body>
 </html>

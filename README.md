@@ -44,6 +44,9 @@ For an easy view of the Rest Response, configure <js/properties.js> to activate 
 * **Christophe** - *Initial work* - [khrys63](https://github.com/khrys63)
 * **Sylvain Desgrais** - [Artpej](https://github.com/Artpej)
 
+## Thanks
+* **Chart.js** - [Chart.js](https://github.com/chartjs/Chart.js), a simple HTML5 Charts using the canvas element
+
 ## License
 This project is licensed under Apache 2.0.
 
