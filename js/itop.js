@@ -253,6 +253,26 @@ function fillTableRack(data) {
         $('#uuse').html(Us);
         $('#upercent').html(parseFloat(Us / nbu * 100).toFixed(2));
         $('#LoginFormRack').hide();
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Occ','Libre'],
+                datasets: [{
+                    data: [Us, nbu-Us],
+                    backgroundColor:['rgb(255, 99, 132)', 'rgb(54, 162, 235)']
+                }]
+            },
+            options:{
+                legend:{
+                    display:false,
+                },
+                tooltips:{
+                    bodyFontSize:10
+                }
+            }
+        });
     }
 }
 //Chargement d'un chassis avec nom passé en param

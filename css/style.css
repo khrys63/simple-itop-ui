@@ -231,3 +231,9 @@ th {
         transform: rotate(360deg);
     }
 }
+#donutChart{
+    float:left;width:65px;
+}
+#infoRack{
+    float:left;
+}
