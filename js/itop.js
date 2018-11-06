@@ -155,7 +155,7 @@ function GetRackWithName(name) {
 //Chargement d'un rack avec nom dans l'url
 function GetRack(e) {
     rackId = getUrlParameter('id');
-    if (datacenterId != null){
+    if (rackId != null){
         GetRackWithName(rackId);
     } else {
         showErrorId();
@@ -230,7 +230,7 @@ function fillTableRack(data) {
         $('#nbu').html(nbu);
         $('#tablerack').not(':first').not(':last').remove();
         var Us = 0;
-        var tableHead = '<tr class="thead"><th>U</th><th>Type</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>Status</th></tr>';
+        var tableHead = '<tr class="thead"><th>U</th><th>Type</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>Organisation</th><th>Status</th></tr>';
         var theDevices = '';
         devices = rack.fields.device_list.map(SanitizeAndAddPersoType('Device'));
         enclosures = rack.fields.enclosure_list.map(SanitizeAndAddPersoType('Chassis'));
@@ -319,7 +319,7 @@ function successEnclosureWS(startWith){
     return function (data){
         try {
             $('#enclosure').show();
-            if (data) { 
+            if (data && data.message!='Found: 0') { 
                 //on a pas l'id alors on passe par le nom
                 var theServer=Object.keys(data.objects)
                     .filter(function(a){return a.startsWith(startWith)})
