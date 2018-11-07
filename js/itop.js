@@ -90,7 +90,7 @@ function successLocationWS(data){
                     showImpossibleLogin();
                     break;
                 case 'Found: 0':
-                    $('#errorLogin').html("Rack inexistant").show();
+                    $('#errorLogin').html("Salle inexistante").show();
                     break;
                 default:
                     $('#datacenter').show();
@@ -183,7 +183,7 @@ function successRackWS(data){
                 showImpossibleLogin();
                 break;
             case 'Found: 0':
-                $('#errorLogin').html("Salle inexistante").show();
+                $('#errorLogin').html("Rack inexistant").show();
                 break;
             default:
                 $('#rack').show();
