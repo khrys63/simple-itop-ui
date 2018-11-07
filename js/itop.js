@@ -46,7 +46,7 @@ function syntaxHighlight(json) {
         });
     }
 }
-//Chargement d'une salle avec url
+//Chargement des racks d'une salle avec url
 function GetLocation(e) {
     $('#result').val('');
     datacenterId = getUrlParameter('id');
@@ -54,7 +54,7 @@ function GetLocation(e) {
         var oJSON = {
             operation: 'core/get',
             'class': 'Location',
-            key: "SELECT Location WHERE name = \"" + datacenterId + "\""
+            key: "SELECT Rack WHERE location_name = \"" + datacenterId + "\""
         };
         CallWSLocation(oJSON);
     } else {
@@ -105,38 +105,33 @@ function successLocationWS(data){
     }
 }
 //Order by location
-function locationByName(a, b) {
-    if (a.orderitem != undefined) {
-        return a.orderitem.localeCompare(b.orderitem)
+function sortRackByName(a, b) {
+    if (a.sort != undefined) {
+        return a.sort.localeCompare(b.sort)
     }
 }
 //Ajout d'un 0 si le nom du rack termine par un seul numeric (need xxxx00 for ordering rack)
 function sanitizeRack(a){
     var char = a.name.charAt(a.name.length-2);
     if (char>='0' && char <='9'){
-        a.orderitem=a.name; 
+        a.sort = a.name        
     }else{
-        a.orderitem=a.name.substring(0,a.name.length-1)+'0'+a.name.substring(a.name.length-1); //ajout 0x
+        a.sort = a.name.substring(0,a.name.length-1)+'0'+a.name.substring(a.name.length-1); //ajout 0x
     }
     return a;
 }
 //Remplissage de la table de la location avec tous les racks
 function fillTableLocation(data) {
     if (data) {
-        //on a pas l'id alors on passe par le 1er objet du JSON
-        var location = Object.keys(data.objects).slice(0, 1).map(function(key){return data.objects[key];})[0];
-
-        $('#name').html(location.fields.name);
-        $('#locationOrg').html(location.fields.org_name);
+        $('#name').html(datacenterId);
         $('#tableLocation').not(':first').not(':last').remove();
         var tableHead = '<tr class="thead"><th>Rack</th></tr>';
-        var theRacks = '';
-        location.fields.physicaldevice_list.map(sanitizeRack).sort(locationByName).forEach(function (rack) {
-            if (rack.finalclass == 'Rack') {
-                theRacks += TemplateEngine($("#racks_line").html(), rack)
-            }
-        });
-        $('#tableLocation tbody').html(tableHead + theRacks);
+        // on a des objets avec noms variables. On les transforme en objet {name:name}. On ajoute un item de tri avec un 0. On tri. On accumule.
+        var theRacks = Object.keys(data.objects).map(function(key){return {'name': data.objects[key].fields.friendlyname}}).map(sanitizeRack).sort(sortRackByName).reduce(function (accu, rack) {
+                accu += TemplateEngine($("#racks_line").html(), rack);
+                return accu;
+        },'');
+        $('#tableLocation tbody').html(tableHead+theRacks);
         $('#LoginFormLoc').hide();
     }
 }
