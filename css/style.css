@@ -237,3 +237,18 @@ th {
 #infoRack{
     float:left;
 }
+#maskButton{
+    float:right;
+    margin-right: 165px;
+    margin-top: 25px;
+}
+#maskButton span{
+    border: #E87C1E;
+    border-width:2px;
+    border-style:solid;
+    padding:5px;
+    border-radius:7px;
+}
+#maskButton span:hover {
+    cursor:pointer;
+}
