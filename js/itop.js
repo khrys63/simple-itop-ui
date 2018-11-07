@@ -94,6 +94,7 @@ function successLocationWS(data){
                     break;
                 default:
                     $('#datacenter').show();
+                    $('#graph').show();
                     fillTableLocation(data);
                     $('#result').html(syntaxHighlight(data));   
             }
@@ -147,6 +148,140 @@ function GetRackWithName(name) {
     };
     CallWSRack(oJSON);
 }
+
+
+//Chargement des racks pour faire les graph
+function GetGraphLocation(e) {
+    $('#result').val('');
+    datacenterId = getUrlParameter('id');
+    if (datacenterId != null){
+        var oJSON = {
+            operation: 'core/get',
+            'class': 'Location',
+            key: "SELECT Rack WHERE location_name = \"" + datacenterId + "\""
+        };
+        CallWSLocationForGraph(oJSON);
+    } else {
+        showErrorId();
+    }
+    e.preventDefault();
+    return false;
+}
+//Appel du WS Itop pour les graphs de la salle
+function CallWSLocationForGraph(oJSON) {
+    $('#result').html('');
+    $('#loading').show();
+    $.ajax({
+        type: "POST",
+        url: getITopUrl(),
+        dataType: "json",
+        data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
+        crossDomain: 'true',
+        success: successGraphWS,
+        error: loadingHide
+    });
+    return false;
+}
+//Action lors retour success du WS des graph de la salle
+function successGraphWS(data){
+    try {
+        if (data) { 
+            switch (data.message){
+                case 'Error: Invalid login':
+                    showErrorLogin();
+                    break;
+                case 'Error: This user is not authorized to use the web services. (The profile REST Services User is required to access the REST web services)':
+                    showImpossibleLogin();
+                    break;
+                case 'Found: 0':
+                    $('#errorLogin').html("Salle inexistante").show();
+                    break;
+                default:
+                    $('#datacenter').show();
+                    fillGraphLocation(data);
+                    $('#result').html(syntaxHighlight(data));   
+            }
+        }
+    } catch (e) {
+        console.log(e);
+    } finally {
+        loadingHide();
+    }
+}
+//Remplissage de la table de la location avec tous les racks
+function fillGraphLocation(data) {
+    if (data) {
+        // on a des objets avec noms variables. On les transforme en objet {name:name}. On ajoute un item de tri avec un 0. On tri. On accumule.
+        var theGraphRacks = Object.keys(data.objects).map(function(key){return {'name': data.objects[key].fields.friendlyname}}).map(sanitizeRack).sort(sortRackByName).reduce(function (accu, rack) {
+            accu += '<div class="GraphContainer"><canvas id="myChart'+rack.name+'" width="100" height="100"></canvas></div>';
+            return accu;
+        },'');
+        $('#graphs').html(theGraphRacks);
+
+        var oJSON = {
+            operation: 'core/get',
+            'class': 'Rack',
+            key: "SELECT Rack WHERE name = \"T1-SM-BC1\""
+        };
+
+        $.ajax({
+            type: "POST",
+            url: getITopUrl(),
+            dataType: "json",
+            data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
+            crossDomain: 'true',
+            success: generateGraphForRack,
+//                error: loadingHide
+        });
+
+        $('#LoginFormLoc').hide();
+    }
+}
+//Remplissage du tableau avec les U
+function generateGraphForRack(data) {
+    if (data) {
+        //on a pas l'id alors on passe par le 1er objet du JSON
+        var rack = Object.keys(data.objects).slice(0, 1).map(function (key) { return data.objects[key] })[0];
+        var nbu = rack.fields.nb_u;
+        var Us = 0;
+
+        rack.fields.enclosure_list.concat(rack.fields.device_list).forEach(function (device) {
+            if (device.enclosure_name == '') {
+                if (device.nb_u != 0) { 
+                    // si FRONT ou REAR dans la description on divise par 2 la capacité du U
+                    if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
+                        Us += parseFloat(device.nb_u/2);
+                    }else{
+                        Us += parseFloat(device.nb_u);
+                    }
+                }
+            }
+        });
+
+        var ctx = document.getElementById('myChart'+rack.fields.friendlyname).getContext('2d');
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Occ','Libre'],
+                datasets: [{
+                    data: [Us, nbu-Us],
+                    backgroundColor:['rgb(255, 99, 132)', 'rgb(54, 162, 235)']
+                }]
+            },
+            options:{
+                legend:{
+                    display:false,
+                },
+                tooltips:{
+                    bodyFontSize:10
+                }
+            }
+        });
+    }
+}
+
+
+
 //Chargement d'un rack avec nom dans l'url
 function GetRack(e) {
     rackId = getUrlParameter('id');
@@ -186,7 +321,8 @@ function successRackWS(data){
                 $('#errorLogin').html("Rack inexistant").show();
                 break;
             default:
-                $('#rack').show();
+//                $('#rack').show();
+                switchRackGraph('rack');
                 fillTableRack(data);
                 $('#result').html(syntaxHighlight(data));
         }
@@ -351,6 +487,15 @@ function successEnclosureWS(startWith){
         } finally {
             loadingHide();
         }
+    }
+}
+function switchRackGraph(showId){
+    if (showId=='rack'){
+        $('#graph').hide();
+        $('#rack').show();
+    }else{
+        $('#graph').show();
+        $('#rack').hide();
     }
 }
 //Fin de chargement

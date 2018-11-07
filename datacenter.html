@@ -30,6 +30,7 @@
 				</table>
 			</div>
 		</div>
+		<div id="graph"><div class="button"><span onclick="GetGraphLocation();">Voir les taux</span></div><div id="graphs"></div></div>
 		<div id="rack">
 			<br>
 			<div id="infoRack">
@@ -41,7 +42,7 @@
 				<span id="uuse"></span> (<span id="upercent">-</span>%)
 			</div>
 			<div id="donutChart"><canvas id="myChart" width="100" height="100"></canvas></div>
-			<div id="maskButton"><span onclick="$('#rack').hide();">Masquer</span></div>
+			<div class="button bright"><span onclick="switchRackGraph('graph');">Masquer</span></div>
 			<br>
 			<br>
 			<div class="site">

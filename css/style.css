@@ -47,6 +47,15 @@ legend {
     width: 15%
 }
 
+#graph {
+    display: none;
+    float: right;
+    width: 85%;
+    margin-top: 4.8em;
+}
+.GraphContainer{
+    float: left;
+}
 #rack {
     display: none;
     float: right;
@@ -237,18 +246,20 @@ th {
 #infoRack{
     float:left;
 }
-#maskButton{
+.bright{
     float:right;
+}
+.button{
     margin-right: 165px;
     margin-top: 25px;
 }
-#maskButton span{
+.button span{
     border: #E87C1E;
     border-width:2px;
     border-style:solid;
     padding:5px;
     border-radius:7px;
 }
-#maskButton span:hover {
+.button span:hover {
     cursor:pointer;
 }
