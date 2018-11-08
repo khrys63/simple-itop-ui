@@ -264,6 +264,7 @@ function generateGraphForRack(data) {
                 }
                 switch (device.finalclass) {
                     case 'NetworkDevice':
+                    case 'SANSwitch':
                         networkUs += us;
                         break;
                     case 'StorageSystem':
@@ -390,7 +391,7 @@ function fillTableRack(data) {
         $('#nbu').html(nbu);
         $('#tablerack').not(':first').not(':last').remove();
         var Us = 0;
-        var tableHead = '<tr class="thead"><th>U</th><th>Type</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>Organisation</th><th>Status</th></tr>';
+        var tableHead = '<tr class="thead"><th>U</th><th>Classe</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>Organisation</th><th>Status</th></tr>';
         var theDevices = '';
         devices = rack.fields.device_list.map(SanitizeAndAddPersoType('Device'));
         enclosures = rack.fields.enclosure_list.map(SanitizeAndAddPersoType('Chassis'));

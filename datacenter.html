@@ -33,7 +33,7 @@
 		<div id="graph">
 			<div class="button graph"><span onclick="GetGraphLocation();">Charger les taux</span></div>
 			<div id="graphs"></div><br>
-			<div id="graphLegend"><span id="legNet">Network</span><span id="legServ">Serveur</span><span id="legStore">Data Storage</span><span id="legEncl">Chassis</span><span id="legfree">Libre</span></div>
+			<div id="graphLegend"><span id="legNet">Network</span><span id="legServ">Serveur</span><span id="legStore">Storage</span><span id="legEncl">Chassis</span><span id="legfree">Libre</span></div>
 		</div>
 		<div id="rack">
 			<br>
@@ -80,7 +80,7 @@
 	<script id="u_line" type="text/template">
 	<tr class="pointer" onclick="GetEnclosureWithName('{name}','{persoType}')">
 		<td>{description}</td>
-		<td>{persoType}</td>
+		<td>{finalclass}</td>
 		<td>{name}</td>
 		<td>{nb_u}</td>
 		<td>{brand_name}</td>
