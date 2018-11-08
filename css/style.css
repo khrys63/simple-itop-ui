@@ -106,6 +106,9 @@ th {
     float:right;
     margin-top: 25px;
 }
+#graphs{
+    height: 320px;
+}
 .graph{
     margin-bottom: 30px;
 }
