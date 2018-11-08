@@ -316,7 +316,6 @@ function successRackWS(data){
                 $('#errorLogin').html("Rack inexistant").show();
                 break;
             default:
-//                $('#rack').show();
                 switchRackGraph('rack');
                 fillTableRack(data);
                 $('#result').html(syntaxHighlight(data));
@@ -484,6 +483,7 @@ function successEnclosureWS(startWith){
         }
     }
 }
+//Afficher le DIV Rack ou Graph
 function switchRackGraph(showId){
     if (showId=='rack'){
         $('#graph').hide();
