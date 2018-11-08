@@ -232,7 +232,13 @@ function fillGraphLocation(data) {
                 success: generateGraphForRack,
             });
         });
-        $('#LoginFormLoc').hide();
+        $('#graphLegend').show();
+        $('#legNet').css("backgroundColor",getNetworkColor());
+        $('#legServ').css("backgroundColor",getServerColor());
+        $('#legStore').css("backgroundColor",getStorageColor());
+        $('#legEncl').css("backgroundColor",getEnclosureColor());
+        $('#legfree').css("backgroundColor",getFreeColor());
+        
     }
 }
 //Remplissage du tableau avec les U
@@ -252,9 +258,9 @@ function generateGraphForRack(data) {
         enclosures.concat(devices).forEach(function (device) {
             if (device.enclosure_name == '') {
                 if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
-                    us = parseFloat(device.nb_u ? device.nb_u :"1")/2;
+                    us = parseFloat(device.nb_u?device.nb_u :"1")/2;
                 }else{
-                    us = parseFloat(device.nb_u ? device.nb_u :"1");
+                    us = parseFloat(device.nb_u?device.nb_u :"1");
                 }
                 switch (device.finalclass) {
                     case 'NetworkDevice':
@@ -276,7 +282,7 @@ function generateGraphForRack(data) {
         var myDoughnutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Network','Server','Chassis','Storage','Libre'],
+                labels: ['Network','Serveur','Chassis','Storage','Libre'],
                 datasets: [{
                     data: [networkUs, serverUs, enclosureUs,  storageUs, nbu-serverUs-networkUs-storageUs-enclosureUs],
                     backgroundColor:[getNetworkColor(), getServerColor(), getEnclosureColor(), getStorageColor(), getFreeColor()]
@@ -380,9 +386,9 @@ function fillTableRack(data) {
             if (device.enclosure_name == '') {
                 // si FRONT ou REAR dans la description on divise par 2 la capacité du U
                 if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
-                    Us += parseFloat(device.nb_u ? device.nb_u :"1")/2;
+                    Us += parseFloat(device.nb_u?device.nb_u :"1")/2;
                 }else{
-                    Us += parseFloat(device.nb_u ? device.nb_u :"1");
+                    Us += parseFloat(device.nb_u?device.nb_u :"1");
                 }
                 theDevices += TemplateEngine($("#u_line").html(), device)
             }

@@ -109,6 +109,15 @@ th {
 .graph{
     margin-bottom: 30px;
 }
+#graphLegend{
+    display: none;
+    text-align: center;
+}
+#graphLegend span{
+    padding: 5px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
 .button span{
     border: #E87C1E;
     border-width:2px;
