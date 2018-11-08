@@ -378,13 +378,11 @@ function fillTableRack(data) {
 
         enclosures.concat(devices).sort(rackByName).forEach(function (device) {
             if (device.enclosure_name == '') {
-                if (device.nb_u != 0) { 
-                    // si FRONT ou REAR dans la description on divise par 2 la capacité du U
-                    if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
-                        Us += parseFloat(device.nb_u/2);
-                    }else{
-                        Us += parseFloat(device.nb_u);
-                    }
+                // si FRONT ou REAR dans la description on divise par 2 la capacité du U
+                if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
+                    Us += parseFloat(device.nb_u ? device.nb_u :"1")/2;
+                }else{
+                    Us += parseFloat(device.nb_u ? device.nb_u :"1");
                 }
                 theDevices += TemplateEngine($("#u_line").html(), device)
             }
