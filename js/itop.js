@@ -270,7 +270,20 @@ function generateGraphForRack(data) {
                         storageUs += us;
                         break;
                     case 'Enclosure':
-                        enclosureUs += us;
+                        if (device.device_list[0]){
+                            switch (device.device_list[0].finalclass){
+                                case 'NetworkDevice':
+                                    networkUs += us;
+                                    break;
+                                case 'StorageSystem':
+                                    storageUs += us;
+                                    break;
+                                default: // Server
+                                    serverUs += us;
+                            }
+                        }else {
+                            enclosureUs += us;
+                        }
                         break;
                     default: // Server
                         serverUs += us;
