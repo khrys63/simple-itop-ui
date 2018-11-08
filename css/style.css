@@ -106,8 +106,20 @@ th {
     float:right;
     margin-top: 25px;
 }
+#graphs{
+    height: 320px;
+}
 .graph{
     margin-bottom: 30px;
+}
+#graphLegend{
+    display: none;
+    text-align: center;
+}
+#graphLegend span{
+    padding: 5px;
+    border-radius: 4px;
+    margin-right: 5px;
 }
 .button span{
     border: #E87C1E;

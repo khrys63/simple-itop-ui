@@ -232,7 +232,13 @@ function fillGraphLocation(data) {
                 success: generateGraphForRack,
             });
         });
-        $('#LoginFormLoc').hide();
+        $('#graphLegend').show();
+        $('#legNet').css("backgroundColor",getNetworkColor());
+        $('#legServ').css("backgroundColor",getServerColor());
+        $('#legStore').css("backgroundColor",getStorageColor());
+        $('#legEncl').css("backgroundColor",getEnclosureColor());
+        $('#legfree').css("backgroundColor",getFreeColor());
+        
     }
 }
 //Remplissage du tableau avec les U
@@ -241,17 +247,47 @@ function generateGraphForRack(data) {
         //on a pas l'id alors on passe par le 1er objet du JSON
         var rack = Object.keys(data.objects).slice(0, 1).map(function (key) { return data.objects[key] })[0];
         var nbu = rack.fields.nb_u;
-        var Us = 0;
+        var networkUs = 0;
+        var serverUs = 0;
+        var enclosureUs = 0;
+        var storageUs = 0;
+        var us =0;
+        devices = rack.fields.device_list.map(SanitizeAndAddPersoType('Device'));
+        enclosures = rack.fields.enclosure_list.map(SanitizeAndAddPersoType('Chassis'));
 
-        rack.fields.enclosure_list.concat(rack.fields.device_list).forEach(function (device) {
+        enclosures.concat(devices).forEach(function (device) {
             if (device.enclosure_name == '') {
-                if (device.nb_u != 0) { 
-                    // si FRONT ou REAR dans la description on divise par 2 la capacité du U
-                    if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
-                        Us += parseFloat(device.nb_u/2);
-                    }else{
-                        Us += parseFloat(device.nb_u);
-                    }
+                if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
+                    us = parseFloat(device.nb_u?device.nb_u :"1")/2;
+                }else{
+                    us = parseFloat(device.nb_u?device.nb_u :"1");
+                }
+                switch (device.finalclass) {
+                    case 'NetworkDevice':
+                    case 'SANSwitch':
+                        networkUs += us;
+                        break;
+                    case 'StorageSystem':
+                        storageUs += us;
+                        break;
+                    case 'Enclosure':
+                        if (device.device_list[0]){
+                            switch (device.device_list[0].finalclass){
+                                case 'NetworkDevice':
+                                    networkUs += us;
+                                    break;
+                                case 'StorageSystem':
+                                    storageUs += us;
+                                    break;
+                                default: // Server
+                                    serverUs += us;
+                            }
+                        }else {
+                            enclosureUs += us;
+                        }
+                        break;
+                    default: // Server
+                        serverUs += us;
                 }
             }
         });
@@ -260,10 +296,10 @@ function generateGraphForRack(data) {
         var myDoughnutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Occ','Libre'],
+                labels: ['Network','Serveur','Chassis','Storage','Libre'],
                 datasets: [{
-                    data: [Us, nbu-Us],
-                    backgroundColor:['rgb(255, 99, 132)', 'rgb(54, 162, 235)']
+                    data: [networkUs, serverUs, enclosureUs,  storageUs, nbu-serverUs-networkUs-storageUs-enclosureUs],
+                    backgroundColor:[getNetworkColor(), getServerColor(), getEnclosureColor(), getStorageColor(), getFreeColor()]
                 }]
             },
             options:{
@@ -355,20 +391,18 @@ function fillTableRack(data) {
         $('#nbu').html(nbu);
         $('#tablerack').not(':first').not(':last').remove();
         var Us = 0;
-        var tableHead = '<tr class="thead"><th>U</th><th>Type</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>Organisation</th><th>Status</th></tr>';
+        var tableHead = '<tr class="thead"><th>U</th><th>Classe</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>Organisation</th><th>Status</th></tr>';
         var theDevices = '';
         devices = rack.fields.device_list.map(SanitizeAndAddPersoType('Device'));
         enclosures = rack.fields.enclosure_list.map(SanitizeAndAddPersoType('Chassis'));
 
         enclosures.concat(devices).sort(rackByName).forEach(function (device) {
             if (device.enclosure_name == '') {
-                if (device.nb_u != 0) { 
-                    // si FRONT ou REAR dans la description on divise par 2 la capacité du U
-                    if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
-                        Us += parseFloat(device.nb_u/2);
-                    }else{
-                        Us += parseFloat(device.nb_u);
-                    }
+                // si FRONT ou REAR dans la description on divise par 2 la capacité du U
+                if (device.description.indexOf('REAR')>=0 || device.description.indexOf('FRONT')>=0){
+                    Us += parseFloat(device.nb_u?device.nb_u :"1")/2;
+                }else{
+                    Us += parseFloat(device.nb_u?device.nb_u :"1");
                 }
                 theDevices += TemplateEngine($("#u_line").html(), device)
             }
@@ -386,7 +420,7 @@ function fillTableRack(data) {
                 labels: ['Occ','Libre'],
                 datasets: [{
                     data: [Us, nbu-Us],
-                    backgroundColor:['rgb(255, 99, 132)', 'rgb(54, 162, 235)']
+                    backgroundColor:[getOccupiedColor(), getFreeColor()]
                 }]
             },
             options:{
