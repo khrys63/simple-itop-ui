@@ -49,12 +49,13 @@ legend {
 
 #graph {
     display: none;
-    float: right;
-    width: 85%;
-    margin-top: 4.8em;
+    width: 90%;
+    margin-top: 6em;
 }
 .GraphContainer{
     float: left;
+    text-align: center;
+    height: 160px;
 }
 #rack {
     display: none;
@@ -246,12 +247,15 @@ th {
 #infoRack{
     float:left;
 }
-.bright{
-    float:right;
-}
 .button{
     margin-right: 165px;
+}
+.mask{
+    float:right;
     margin-top: 25px;
+}
+.graph{
+    margin-bottom: 30px;
 }
 .button span{
     border: #E87C1E;

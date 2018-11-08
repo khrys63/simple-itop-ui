@@ -148,10 +148,8 @@ function GetRackWithName(name) {
     };
     CallWSRack(oJSON);
 }
-
-
 //Chargement des racks pour faire les graph
-function GetGraphLocation(e) {
+function GetGraphLocation() {
     $('#result').val('');
     datacenterId = getUrlParameter('id');
     if (datacenterId != null){
@@ -164,7 +162,6 @@ function GetGraphLocation(e) {
     } else {
         showErrorId();
     }
-    e.preventDefault();
     return false;
 }
 //Appel du WS Itop pour les graphs de la salle
@@ -213,27 +210,28 @@ function fillGraphLocation(data) {
     if (data) {
         // on a des objets avec noms variables. On les transforme en objet {name:name}. On ajoute un item de tri avec un 0. On tri. On accumule.
         var theGraphRacks = Object.keys(data.objects).map(function(key){return {'name': data.objects[key].fields.friendlyname}}).map(sanitizeRack).sort(sortRackByName).reduce(function (accu, rack) {
-            accu += '<div class="GraphContainer"><canvas id="myChart'+rack.name+'" width="100" height="100"></canvas></div>';
+            accu += '<div class="GraphContainer"><span>'+rack.name+'</span><br><canvas id="myChart'+rack.name+'" width="100" height="100"></canvas></div>';
             return accu;
         },'');
         $('#graphs').html(theGraphRacks);
 
-        var oJSON = {
-            operation: 'core/get',
-            'class': 'Rack',
-            key: "SELECT Rack WHERE name = \"T1-SM-BC1\""
-        };
+        // on charge tous les canvas un par un
+        Object.keys(data.objects).map(function(key){return {'name': data.objects[key].fields.friendlyname}}).map(sanitizeRack).sort(sortRackByName).forEach(function(rack){
+            var oJSON = {
+                operation: 'core/get',
+                'class': 'Rack',
+                key: "SELECT Rack WHERE name = \""+rack.name+"\""
+            };
 
-        $.ajax({
-            type: "POST",
-            url: getITopUrl(),
-            dataType: "json",
-            data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
-            crossDomain: 'true',
-            success: generateGraphForRack,
-//                error: loadingHide
+            $.ajax({
+                type: "POST",
+                url: getITopUrl(),
+                dataType: "json",
+                data: { auth_user: $('#auth_user').val(), auth_pwd: $('#auth_pwd').val(), json_data: JSON.stringify(oJSON) },
+                crossDomain: 'true',
+                success: generateGraphForRack,
+            });
         });
-
         $('#LoginFormLoc').hide();
     }
 }
@@ -279,9 +277,6 @@ function generateGraphForRack(data) {
         });
     }
 }
-
-
-
 //Chargement d'un rack avec nom dans l'url
 function GetRack(e) {
     rackId = getUrlParameter('id');
