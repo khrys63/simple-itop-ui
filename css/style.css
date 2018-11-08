@@ -3,64 +3,62 @@ pre {
     padding: 5px;
     margin: 5px;
 }
-
 .string {
     color: green;
 }
-
 .number {
     color: darkorange;
 }
-
 .boolean {
     color: blue;
 }
-
 .null {
     color: magenta;
 }
-
 .key {
     color: red;
 }
-
 .body {
     padding: 10px;
     font-size: 10pt;
     font-family: Verdana, Arial, Helvetica;
 }
-
 fieldset {
     padding: 10px;
     border: 1px #ccc solid;
     width: 560px;
 }
-
 legend {
     padding: 10px;
     background-color: #fff;
 }
-
 #datacenter {
     display: none;
     float: left;
     width: 15%
 }
-
+#graph {
+    display: none;
+    width: 90%;
+    margin-top: 6em;
+}
+.GraphContainer{
+    float: left;
+    text-align: center;
+    height: 160px;
+}
 #rack {
     display: none;
     float: right;
     width: 85%;
     margin-top: 4.8em;
 }
-
 #server {
     margin-top: 2em;
     display: none;
     clear:both;
     width: 100%;
 }
-
 #JSONResult {
     display: none;
     width: 100%;
@@ -75,24 +73,19 @@ table {
     border-collapse: collapse;
     width: 90%;
 }
-
-td,
-th {
+td, th {
     border: 1px solid #ddd;
     padding: 5px;
 }
-
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
-
 tr:hover {
     background-color: #ddd;
 }
 tr.pointer:hover {
     cursor:pointer;
 }
-
 th {
     padding-top: 12px;
     padding-bottom: 12px;
@@ -100,10 +93,33 @@ th {
     background-color: #E87C1E;
     color: white;
 }
-
-
+#donutChart{
+    float:left;width:65px;
+}
+#infoRack{
+    float:left;
+}
+.button{
+    margin-right: 165px;
+}
+.mask{
+    float:right;
+    margin-top: 25px;
+}
+.graph{
+    margin-bottom: 30px;
+}
+.button span{
+    border: #E87C1E;
+    border-width:2px;
+    border-style:solid;
+    padding:5px;
+    border-radius:7px;
+}
+.button span:hover {
+    cursor:pointer;
+}
 /* Absolute Center Spinner */
-
 .loading {
     position: fixed;
     z-index: 999;
@@ -116,13 +132,10 @@ th {
     bottom: 0;
     right: 0;
 }
-
 #loading {
     display: none;
 }
-
 /* Transparent Overlay */
-
 .loading:before {
     content: '';
     display: block;
@@ -133,18 +146,13 @@ th {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3);
 }
-
-/* :not(:required) hides these rules from IE9 and below */
-
 .loading:not(:required) {
-    /* hide "loading..." text */
     font: 0/0 a;
     color: transparent;
     text-shadow: none;
     background-color: transparent;
     border: 0;
 }
-
 .loading:not(:required):after {
     content: '';
     display: block;
@@ -161,9 +169,7 @@ th {
     -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
     box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
 }
-
 /* Animation */
-
 @-webkit-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -180,7 +186,6 @@ th {
         transform: rotate(360deg);
     }
 }
-
 @-moz-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -197,7 +202,6 @@ th {
         transform: rotate(360deg);
     }
 }
-
 @-o-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -214,7 +218,6 @@ th {
         transform: rotate(360deg);
     }
 }
-
 @keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -230,10 +233,4 @@ th {
         -o-transform: rotate(360deg);
         transform: rotate(360deg);
     }
-}
-#donutChart{
-    float:left;width:65px;
-}
-#infoRack{
-    float:left;
 }
