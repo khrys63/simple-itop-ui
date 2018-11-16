@@ -87,6 +87,7 @@ function successLocationWS(data){
                     showErrorLogin();
                     break;
                 case 'Error: This user is not authorized to use the web services. (The profile REST Services User is required to access the REST web services)':
+                case 'Error: Portal user is not allowed':
                     showImpossibleLogin();
                     break;
                 case 'Found: 0':
@@ -346,6 +347,7 @@ function successRackWS(data){
                 showErrorLogin();
                 break;
             case 'Error: This user is not authorized to use the web services. (The profile REST Services User is required to access the REST web services)':
+            case 'Error: Portal user is not allowed':
                 showImpossibleLogin();
                 break;
             case 'Found: 0':
