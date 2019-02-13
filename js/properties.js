@@ -22,3 +22,8 @@ function getStorageColor(){
 function getEnclosureColor(){
     return 'rgb(102, 153, 255)';
 }
+datacenter = {
+    "none" : "",
+    "ROOM1" : "ROOM1",
+    "ROOM2" : "ROOM2"
+}
