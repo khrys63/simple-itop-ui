@@ -72,7 +72,10 @@ legend {
 }
 table {
     border-collapse: collapse;
-    width: 90%;
+    width: 100%;
+}
+#tableLocation {
+    width: 95%;
 }
 td, th {
     border: 1px solid #ddd;
