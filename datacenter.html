@@ -9,6 +9,10 @@
 	<script src="js/itop.js"></script>
 </head>
 <body>
+	<header id="site-head">
+		<a href="../index.html"><img src="img/home.png"></a>
+		<select name="datas" id="datas"></select>
+	</header>
 	<div class="body">
 		<div class="loading" id="loading">Loading&#8230;</div>
 		<form method="POST" id="LoginFormLoc">
@@ -22,7 +26,6 @@
 		</form>
 		<div id="datacenter">
 			<h2><span id="name"></span></h2>
-			Organisation : <span id="locationOrg"></span>
 			<br>
 			<div class="site">
 				<table id="tableLocation">
@@ -31,7 +34,7 @@
 			</div>
 		</div>
 		<div id="graph">
-			<div class="button graph"><span onclick="GetGraphLocation();">Charger les taux</span></div>
+			<div class="button graph"><span onclick="GetGraphLocation(document.getElementById('datas').value);">Charger les taux</span></div>
 			<div id="graphs"></div><br>
 			<div id="graphLegend"><span id="legNet">Network</span><span id="legServ">Serveur</span><span id="legStore">Storage</span><span id="legEncl">Chassis</span><span id="legfree">Libre</span></div>
 		</div>
@@ -86,6 +89,7 @@
 		<td>{nb_u}</td>
 		<td>{brand_name}</td>
 		<td>{model_name}</td>
+		<td>{serialnumber}</td>
 		<td>{organization_name}</td>
 		<td>{status}</td>
 	</tr>

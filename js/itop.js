@@ -49,7 +49,6 @@ function syntaxHighlight(json) {
 //Chargement des racks d'une salle avec url
 function GetLocation(e) {
     $('#result').val('');
-    datacenterId = getUrlParameter('id');
     if (datacenterId != null){
         var oJSON = {
             operation: 'core/get',
@@ -96,7 +95,11 @@ function successLocationWS(data){
                 default:
                     $('#datacenter').show();
                     $('#graph').show();
+                    $('#graphs').html('');
+                    $('#graphLegend').hide();
+                    $('#rack').hide();
                     fillTableLocation(data);
+                    loadComboBoxdataCenter($('#name').html());
                     $('#result').html(syntaxHighlight(data));   
             }
         }
@@ -106,6 +109,17 @@ function successLocationWS(data){
         loadingHide();
     }
 }
+function loadComboBoxdataCenter(selectedValue){
+    html = "";
+    for(var key in datacenter) {
+        html += "<option value=" + key;
+        if (datacenter[key]==selectedValue) {html += " selected";} 
+        html += ">" +datacenter[key] + "</option>";
+    }
+    document.getElementById("datas").innerHTML = html;
+    document.getElementById("datas").onchange = DatacenterChange;
+}
+
 //Order by location
 function sortRackByName(a, b) {
     if (a.sort != undefined) {
@@ -150,9 +164,8 @@ function GetRackWithName(name) {
     CallWSRack(oJSON);
 }
 //Chargement des racks pour faire les graph
-function GetGraphLocation() {
+function GetGraphLocation(datacenterId) {
     $('#result').val('');
-    datacenterId = getUrlParameter('id');
     if (datacenterId != null){
         var oJSON = {
             operation: 'core/get',
@@ -393,7 +406,7 @@ function fillTableRack(data) {
         $('#nbu').html(nbu);
         $('#tablerack').not(':first').not(':last').remove();
         var Us = 0;
-        var tableHead = '<tr class="thead"><th>U</th><th>Classe</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>Organisation</th><th>Status</th></tr>';
+        var tableHead = '<tr class="thead"><th>U</th><th>Classe</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>N Série</th><th>Organisation</th><th>Status</th></tr>';
         var theDevices = '';
         devices = rack.fields.device_list.map(SanitizeAndAddPersoType('Device'));
         enclosures = rack.fields.enclosure_list.map(SanitizeAndAddPersoType('Chassis'));
@@ -549,6 +562,11 @@ function showImpossibleLogin(){
     $('#errorLogin').html("Utilisateur non autorisé.").show();
 }
 $(document).ready(function () {
+    datacenterId = getUrlParameter('id');
     $('#LoginFormLoc').on("submit",GetLocation);
     $('#LoginFormRack').on("submit",GetRack);
 });
+function DatacenterChange(){
+    datacenterId = document.getElementById('datas').value;
+    GetLocation(Event);
+}
