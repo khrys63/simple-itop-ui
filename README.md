@@ -35,15 +35,32 @@ A simple URL :
 ```
 https://yourdomain/simple-itop-ui/datacenter.html?id=NAME_OF_YOUR_LOCATION
 ```
-![iTop location](screenshot/itoplocation2.png)
+
+On the left, you'll find all racks of the specified location :
+
+![iTop location](screenshot/itopallrack.png)
+
+After choosing a rack, its detail appeares on the right, with occupied space chart :
+
+![iTop location](screenshot/itoprackdetail.png)
+
+Under this detail, you'll find all servers and enclosures, and you can select an enclosure ti show its internal detail :
+
+![iTop location](screenshot/itoprackandenclosure.png)
+
+On the top right corner, you'll find a combobox to switch location :
+
+![iTop location](screenshot/itopswitchlocation.png)
+
+On the main page of a location, you can see the occupied space of all rack, with detail percent :
+
+![iTop location](screenshot/itopspace.png)
 
 
 Also existing a page for showing a single rack.
 ```
 https://yourdomain/simple-itop-ui/rack.html?id=NAME_OF_YOUR_RACK
 ```
-
-![iTop location](screenshot/itoprack.png)
 
 ### Practice in iTop
 For a good order of each Server or Enclosure in the Rack, you must specify the location in the Description field.
