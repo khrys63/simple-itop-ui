@@ -37,6 +37,20 @@ https://yourdomain/simple-itop-ui/rack.html?id=NAME_OF_YOUR_RACK
 
 ![iTop location](screenshot/itoprack.png)
 
+### Practice in iTop
+For a good order of each Server or Enclosure in the Rack, you must specify the location in the Description field.
+
+Format U-From-To with 3 digits.
+
+Examples :
+```
+U-001-001
+U-010-011
+U-020-027
+```
+
+![iTop location](screenshot/itopUandDesc.png)
+
 ## Debuging in real time
 For an easy view of the Rest Response, configure <js/properties.js> to activate the JSON viewer (function getIsDebugJSONVisible).
 
