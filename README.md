@@ -52,7 +52,7 @@ On the top right corner, you'll find a combobox to switch location :
 
 ![iTop location](screenshot/itopswitchlocation.png)
 
-On the main page of a location, you can see the occupied space of all rack, with detail percent :
+On the main page of a location, you can see the occupied space of all rack, with detail percent bu clicking on the <Charger les taux> button :
 
 ![iTop location](screenshot/itopspace.png)
 
