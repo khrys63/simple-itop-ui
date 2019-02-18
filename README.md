@@ -21,17 +21,21 @@ Warning :
 
 ### Installing
 Copy file on your website server.
+
 Modify <js/properties.js> to update your iTop webservice url (function getITopUrl).
 
 If you have more than one room in your data center,
+
 Modify <js/properties.js> to specify them (datacenter object).
+
+Put your logo in <img/home.png>.
 
 ### Browsing & Enjoy
 A simple URL :
 ```
 https://yourdomain/simple-itop-ui/datacenter.html?id=NAME_OF_YOUR_LOCATION
 ```
-![iTop location](screenshot/itoplocation.png)
+![iTop location](screenshot/itoplocation2.png)
 
 
 Also existing a page for showing a single rack.
