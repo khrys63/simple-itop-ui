@@ -1,3 +1,4 @@
+
 function getITopUrl(){
     return "https://yourdomain/webservices/rest.php?version=1.2";
 }
@@ -24,6 +25,6 @@ function getEnclosureColor(){
 }
 datacenter = {
     "none" : "",
-    "ROOM1" : "ROOM1",
-    "ROOM2" : "ROOM2"
+    "DC-ROOM-1" : "DC-ROOM-1",
+    "DC-ROOM-2" : "DC-ROOM-2"
 }
