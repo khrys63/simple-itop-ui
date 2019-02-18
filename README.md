@@ -23,6 +23,10 @@ Warning :
 Copy file on your website server.
 Modify <js/properties.js> to update your iTop webservice url (function getITopUrl).
 
+If you have more than one room in your data center,
+Modify <js/properties.js> to specify them (datacenter object).
+
+### Browsing & Enjoy
 A simple URL :
 ```
 https://yourdomain/simple-itop-ui/datacenter.html?id=NAME_OF_YOUR_LOCATION
@@ -40,7 +44,7 @@ https://yourdomain/simple-itop-ui/rack.html?id=NAME_OF_YOUR_RACK
 ### Practice in iTop
 For a good order of each Server or Enclosure in the Rack, you must specify the location in the Description field.
 
-Format U-From-To with 3 digits.
+Format is <U-From-To> with 3 digits.
 
 Examples :
 ```
