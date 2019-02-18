@@ -1,6 +1,5 @@
-
 function getITopUrl(){
-    return "https://yourdomain/webservices/rest.php?version=1.2";
+    return "https://yourdomain/itop/webservices/rest.php?version=1.2";
 }
 function getIsDebugJSONVisible(){
     return false;
