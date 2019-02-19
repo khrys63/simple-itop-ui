@@ -141,7 +141,7 @@ function fillTableLocation(data) {
     if (data) {
         $('#name').html(datacenterId);
         $('#tableLocation').not(':first').not(':last').remove();
-        var tableHead = '<tr class="thead"><th>Rack</th></tr>';
+        var tableHead = '<tr class="thead"><th>'+applyTrad("tablerack")+'</th></tr>';
         // on a des objets avec noms variables. On les transforme en objet {name:name}. On ajoute un item de tri avec un 0. On tri. On accumule.
         var theRacks = Object.keys(data.objects).map(function(key){return {'name': data.objects[key].fields.friendlyname}}).map(sanitizeRack).sort(sortRackByName).reduce(function (accu, rack) {
                 accu += TemplateEngine($("#racks_line").html(), rack);
@@ -310,7 +310,7 @@ function generateGraphForRack(data) {
         var myDoughnutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Network','Serveur','Chassis','Storage','Libre'],
+                labels: [applyTrad('legNet'),applyTrad('legServ'),applyTrad('legStore'),applyTrad('legEncl'),applyTrad('legfree')],
                 datasets: [{
                     data: [networkUs, serverUs, enclosureUs,  storageUs, nbu-serverUs-networkUs-storageUs-enclosureUs],
                     backgroundColor:[getNetworkColor(), getServerColor(), getEnclosureColor(), getStorageColor(), getFreeColor()]
@@ -406,7 +406,7 @@ function fillTableRack(data) {
         $('#nbu').html(nbu);
         $('#tablerack').not(':first').not(':last').remove();
         var Us = 0;
-        var tableHead = '<tr class="thead"><th>U</th><th>Classe</th><th>Description</th><th>U occup&eacute;(s)</th><th>Marque</th><th>Modele</th><th>N Série</th><th>Organisation</th><th>Status</th></tr>';
+        var tableHead = '<tr class="thead"><th>'+applyTrad("tableu")+'</th><th>'+applyTrad("tableclasse")+'</th><th>'+applyTrad("tabledesc")+'</th><th>'+applyTrad("tableuocc")+'</th><th>'+applyTrad("tablemar")+'</th><th>'+applyTrad("tablemodel")+'</th><th>'+applyTrad("tableserial")+'</th><th>'+applyTrad("tableor")+'</th><th>'+applyTrad("tablestatus")+'</th></tr>';
         var theDevices = '';
         devices = rack.fields.device_list.map(SanitizeAndAddPersoType('Device'));
         enclosures = rack.fields.enclosure_list.map(SanitizeAndAddPersoType('Chassis'));
@@ -432,7 +432,7 @@ function fillTableRack(data) {
         var myDoughnutChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Occ','Libre'],
+                labels: [applyTrad('legoccup'),applyTrad('legfree')],
                 datasets: [{
                     data: [Us, nbu-Us],
                     backgroundColor:[getOccupiedColor(), getFreeColor()]
@@ -456,7 +456,7 @@ function GetEnclosureWithName(name,persoType) {
         $('#chassisname').html(name);
 
         $('#tableserver').not(':first').not(':last').remove();
-        var tableHead = '<tr class="thead"><th>Description</th><th>Marque</th></tr>';
+        var tableHead = '<tr class="thead"><th>'+applyTrad("tabledesc")+'</th><th>'+applyTrad("tablemar")+'</th></tr>';
         $('#tableserver tbody').html(tableHead);
 
         var oJSON = {
@@ -565,6 +565,7 @@ $(document).ready(function () {
     datacenterId = getUrlParameter('id');
     $('#LoginFormLoc').on("submit",GetLocation);
     $('#LoginFormRack').on("submit",GetRack);
+    trad();
 });
 function DatacenterChange(){
     datacenterId = document.getElementById('datas').value;
