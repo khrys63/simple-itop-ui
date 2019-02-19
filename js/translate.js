@@ -27,7 +27,10 @@ en = i18n.create({
         "tablemodel":"Model",
         "tableserial":"Serial n°",
         "tableor":"Organisation",
-        "tablestatus":"Status"
+        "tablestatus":"Status",
+        "msguser":"Unauthorized user.",
+        "msgfailcon":"Invalid Login or Password.",
+        "msgparam":"Required Id parameter."
     }
 })
 /*French text*/
@@ -59,7 +62,10 @@ fr = i18n.create({
         "tablemodel":"Modèle",
         "tableserial":"N° Série",
         "tableor":"Organisation",
-        "tablestatus":"Status"
+        "tablestatus":"Status",
+        "msguser":"Utilisateur non autorisé.",
+        "msgfailcon":"Login ou mot de passe incorrect.",
+        "msgparam":"Paramètre id obligatoire."
     }
 })
 /*function to trad all span*/

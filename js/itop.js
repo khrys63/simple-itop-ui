@@ -549,17 +549,17 @@ function loadingHide(){
 //Id Obligatoire
 function showErrorId(){
     console.log('Id undefined');
-    $('#errorLogin').html("Paramètre id obligatoire.").show();
+    $('#errorLogin').html(applyTrad("msgparam")).show();
 }
 //Login ou mot de passe invalide
 function showErrorLogin(){
     console.log('Invalid Login');
-    $('#errorLogin').html("Login ou mot de passe incorrect.").show();
+    $('#errorLogin').html(applyTrad("msgfailcon")).show();
 }
 //connection au WS interdite
 function showImpossibleLogin(){
     console.log('This user is not authorized to use the web services. ');
-    $('#errorLogin').html("Utilisateur non autorisé.").show();
+    $('#errorLogin').html(applyTrad("msguser")).show();
 }
 $(document).ready(function () {
     datacenterId = getUrlParameter('id');
