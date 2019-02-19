@@ -4,6 +4,9 @@ function getITopUrl(){
 function getIsDebugJSONVisible(){
     return false;
 }
+function getLanguage(){
+    return "fr";
+}
 function getOccupiedColor(){
     return 'rgb(255, 99, 132)';
 }
