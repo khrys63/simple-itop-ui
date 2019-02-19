@@ -48,7 +48,7 @@ After choosing a rack, its detail appeares on the right, with occupied space cha
 
 ![iTop location](screenshot/itoprackdetail.png)
 
-Under this detail, you'll find all servers and enclosures, and you can select an enclosure ti show its internal detail :
+Under this detail, you'll find all servers and enclosures, and you can select an enclosure to show its internal detail :
 
 ![iTop location](screenshot/itoprackandenclosure.png)
 
@@ -56,7 +56,7 @@ On the top right corner, you'll find a combobox to switch location :
 
 ![iTop location](screenshot/itopswitchlocation.png)
 
-On the main page of a location, you can see the occupied space of all rack, with detail percent bu clicking on the <Charger les taux> button :
+On the main page of a location, you can see the occupied space of all rack, with detail percent by clicking on the <Charger les taux> button :
 
 ![iTop location](screenshot/itopspace.png)
 
