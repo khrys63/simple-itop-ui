@@ -22,11 +22,15 @@ Warning :
 ### Installing
 Copy file on your website server.
 
-Modify <js/properties.js> to update your iTop webservice url (function getITopUrl).
+Modify <js/properties.js> to update your iTop webservice url in getITopUrl() function.
 
 If you have more than one room in your data center,
 
-Modify <js/properties.js> to specify them (datacenter object).
+Modify <js/properties.js> to specify them datacenter JSON object.
+
+You can choose interface language beetwen en(english) or fr(french).
+
+Modify <js/properties.js> to specify en / fr in getLanguage() function.
 
 Put your logo in <img/home.png>.
 
