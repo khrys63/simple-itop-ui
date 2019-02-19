@@ -84,7 +84,8 @@ For an easy view of the Rest Response, configure <js/properties.js> to activate 
 * **Sylvain Desgrais** - [Artpej](https://github.com/Artpej)
 
 ## Thanks
-* **Chart.js** - [Chart.js](https://github.com/chartjs/Chart.js), a simple HTML5 Charts using the canvas element
+* **Chart.js** - [Chart.js](https://github.com/chartjs/Chart.js), Simple HTML5 Charts using the canvas element.
+* **i18njs** - [i18njs]( https://github.com/roddeh/i18njs), Internationalisation library for JS projects.
 
 ## License
 This project is licensed under Apache 2.0.
