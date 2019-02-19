@@ -8,6 +8,8 @@
 	<script src="js/jquery.js"></script>
 	<script src="js/properties.js"></script>
 	<script src="js/itop.js"></script>
+	<script src="js/i18n.js"></script>
+	<script src="js/translate.js"></script>
 </head>
 <body>
 	<header id="site-head">
@@ -17,21 +19,21 @@
 		<div class="loading" id="loading">Loading&#8230;</div>
 		<form method="POST" id="LoginFormRack">
 			<fieldset id="login">
-			<legend>Server Parameters</legend>
-				iTop Login: <input type="text" id="auth_user" name="auth_user" value="" /> 
-				Password: <input type="password" id="auth_pwd" name="auth_pwd" value="" />&nbsp;
-				<button type="submit">Login</button>
+				<legend id="formserver"></legend>
+				<span id="formlogin"></span>: <input type="text" id="auth_user" name="auth_user" value="" /> 
+				<span id="formpassword"></span>: <input type="password" id="auth_pwd" name="auth_pwd" value="" />&nbsp;
+				<button type="submit"><span id="formconnect"></span></button>
 			</fieldset>
 			<span id="errorLogin"></span>
 		</form>
 		<div id="rack">
 			<br>
 			<div id="infoRack">
-				<strong>D&eacute;tail du rack : </strong>
-				<br> Nom :
+				<strong><span id="sprackdetail"></span> : </strong>
+				<br><span id="sprackname"></span> :
 				<span id="namerack"></span>
-				<br> Nombre U :
-				<span id="nbu"></span> - Nombre U occup&eacute;(s):
+				<br><span id="spnbu"></span> :
+				<span id="nbu"></span> - <span id="spnbuocc"></span> :
 				<span id="uuse"></span> (<span id="upercent">-</span>%)
 			</div>
 			<div id="donutChart"><canvas id="myChart" width="100" height="100"></canvas></div>
@@ -44,7 +46,7 @@
 			</div>
 			<div id="server">
 				<br>
-				<strong>D&eacute;tail du chassis <span id="chassisname"></span> : </strong>
+				<strong><span id="spenclodetail"></span> <span id="chassisname"></span> : </strong>
 				<div class="site">
 					<table id="tableserver">
 						<tbody></tbody>

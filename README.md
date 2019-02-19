@@ -22,11 +22,15 @@ Warning :
 ### Installing
 Copy file on your website server.
 
-Modify <js/properties.js> to update your iTop webservice url (function getITopUrl).
+Modify <js/properties.js> to update your iTop webservice url in getITopUrl() function.
 
 If you have more than one room in your data center,
 
-Modify <js/properties.js> to specify them (datacenter object).
+Modify <js/properties.js> to specify them datacenter JSON object.
+
+You can choose interface language beetwen en(english) or fr(french).
+
+Modify <js/properties.js> to specify en / fr in getLanguage() function.
 
 Put your logo in <img/home.png>.
 
@@ -44,7 +48,7 @@ After choosing a rack, its detail appeares on the right, with occupied space cha
 
 ![iTop location](screenshot/itoprackdetail.png)
 
-Under this detail, you'll find all servers and enclosures, and you can select an enclosure ti show its internal detail :
+Under this detail, you'll find all servers and enclosures, and you can select an enclosure to show its internal detail :
 
 ![iTop location](screenshot/itoprackandenclosure.png)
 
@@ -52,7 +56,7 @@ On the top right corner, you'll find a combobox to switch location :
 
 ![iTop location](screenshot/itopswitchlocation.png)
 
-On the main page of a location, you can see the occupied space of all rack, with detail percent bu clicking on the <Charger les taux> button :
+On the main page of a location, you can see the occupied space of all rack, with detail percent by clicking on the <Charger les taux> button :
 
 ![iTop location](screenshot/itopspace.png)
 
@@ -84,7 +88,8 @@ For an easy view of the Rest Response, configure <js/properties.js> to activate 
 * **Sylvain Desgrais** - [Artpej](https://github.com/Artpej)
 
 ## Thanks
-* **Chart.js** - [Chart.js](https://github.com/chartjs/Chart.js), a simple HTML5 Charts using the canvas element
+* **Chart.js** - [Chart.js](https://github.com/chartjs/Chart.js), Simple HTML5 Charts using the canvas element.
+* **i18njs** - [i18njs]( https://github.com/roddeh/i18njs), Internationalisation library for JS projects.
 
 ## License
 This project is licensed under Apache 2.0.

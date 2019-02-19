@@ -7,6 +7,8 @@
 	<script src="js/jquery.js"></script>
 	<script src="js/properties.js"></script>
 	<script src="js/itop.js"></script>
+	<script src="js/i18n.js"></script>
+	<script src="js/translate.js"></script>
 </head>
 <body>
 	<header id="site-head">
@@ -17,10 +19,10 @@
 		<div class="loading" id="loading">Loading&#8230;</div>
 		<form method="POST" id="LoginFormLoc">
 			<fieldset id="login">
-			<legend>Server Parameters</legend>
-				iTop Login: <input type="text" id="auth_user" name="auth_user" value="" /> 
-				Password: <input type="password" id="auth_pwd" name="auth_pwd" value="" />&nbsp;
-				<button type="submit">Login</button>
+			<legend id="formserver"></legend>
+				<span id="formlogin"></span>: <input type="text" id="auth_user" name="auth_user" value="" /> 
+				<span id="formpassword"></span>: <input type="password" id="auth_pwd" name="auth_pwd" value="" />&nbsp;
+				<button type="submit"><span id="formconnect"></span></button>
 			</fieldset>
 			<span id="errorLogin"></span>
 		</form>
@@ -34,22 +36,22 @@
 			</div>
 		</div>
 		<div id="graph">
-			<div class="button graph"><span onclick="GetGraphLocation(document.getElementById('datas').value);">Charger les taux</span></div>
+			<div class="button graph"><span onclick="GetGraphLocation(document.getElementById('datas').value);" id="btnspace"></span></div>
 			<div id="graphs"></div><br>
-			<div id="graphLegend"><span id="legNet">Network</span><span id="legServ">Serveur</span><span id="legStore">Storage</span><span id="legEncl">Chassis</span><span id="legfree">Libre</span></div>
+			<div id="graphLegend"><span id="legNet"></span><span id="legServ"></span><span id="legStore"></span><span id="legEncl"></span><span id="legfree"></span></div>
 		</div>
 		<div id="rack">
 			<br>
 			<div id="infoRack">
-			<strong>D&eacute;tail du rack : </strong>
-				<br> Nom :
+			<strong><span id="sprackdetail"></span> : </strong>
+				<br><span id="sprackname"></span> :
 				<span id="namerack"></span>
-				<br> Nombre U :
-				<span id="nbu"></span> - Nombre U occup&eacute;(s):
+				<br><span id="spnbu"></span> :
+				<span id="nbu"></span> - <span id="spnbuocc"></span> :
 				<span id="uuse"></span> (<span id="upercent">-</span>%)
 			</div>
 			<div id="donutChart"><canvas id="myChart" width="100" height="100"></canvas></div>
-			<div class="button mask"><span onclick="switchRackGraph('graph');">Masquer</span></div>
+			<div class="button mask"><span onclick="switchRackGraph('graph');" id="btnmask"></span></div>
 			<br>
 			<br>
 			<div class="site">
@@ -59,7 +61,7 @@
 			</div>
 			<div id="server">
 				<br>
-				<strong>D&eacute;tail du chassis <span id="chassisname"></span> : </strong>
+				<strong><span id="spenclodetail"></span> <span id="chassisname"></span> : </strong>
 				<div class="site">
 					<table id="tableserver">
 						<tbody></tbody>
