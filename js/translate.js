@@ -1,7 +1,7 @@
 /*English text*/
 en = i18n.create({
     values:{
-        "btnspace":"Loading room's space",
+        "btnspace":"Load room's utilization",
         "btnmask":"Mask rack",
         "legNet":"Network",
         "legServ":"Server",
@@ -25,7 +25,7 @@ en = i18n.create({
         "tableuocc":"Height",
         "tablemar":"Brand",
         "tablemodel":"Model",
-        "tableserial":"Serial n°",
+        "tableserial":"Serial #",
         "tableor":"Organisation",
         "tablestatus":"Status",
         "msguser":"Unauthorized user.",
